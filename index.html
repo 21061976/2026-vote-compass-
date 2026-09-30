@@ -116,6 +116,14 @@ blockquote{margin:0;font-family:var(--f-display);font-size:1.08rem;line-height:1
 .src{font-size:.86rem;color:var(--muted)}
 .pending{border:1px dashed var(--line);border-radius:14px;padding:.8rem 1rem;font-size:.9rem;color:var(--muted)}
 
+
+.matrixbar{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.7rem .8rem}
+.matrixbar .mxlabel{font-size:.88rem;color:var(--muted);margin-inline-end:auto}
+.matrixbtn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;min-height:42px;padding:0 .9rem;cursor:pointer;font-weight:700}
+.matrixbtn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.tailored{background:var(--accent-soft);border:1px solid var(--ball-ring);border-radius:14px;padding:.7rem .85rem;font-size:.92rem}
+.tailored b{color:var(--accent)}
+
 details.help{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.3rem 1rem}
 details.help summary{cursor:pointer;font-weight:700;min-height:48px;display:flex;align-items:center}
 details.help .in{display:flex;flex-direction:column;gap:.55rem;padding-bottom:.8rem;font-size:.93rem}
@@ -163,7 +171,7 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
       <div class="row"><span class="st ok" aria-hidden="true">✓</span><span><b>תוכנית קונקרטית:</b> יש מספר, תקציב, חוק או מנגנון (בשתי שאלות לפחות)</span></div>
       <div class="row"><span class="st mid" aria-hidden="true">◯</span><span><b>עמדה כללית:</b> יש התייחסות, אבל בלי מנגנון ברור</span></div>
       <div class="row"><span class="st none" aria-hidden="true">—</span><span><b>לא נמצאה מדיניות</b> במסמך שבדקנו</span></div>
-      <div class="row"><span id="ball-legend" style="display:flex;gap:.2rem"></span><span><b>העיגול הכחול:</b> כמה מהשאלות קיבלו מענה. תוכנית קונקרטית נספרת כשאלה שלמה, ועמדה כללית כחצי. מלא = תוכנית קונקרטית בכל השאלות</span></div>
+      <div class="row"><span id="ball-legend" style="display:flex;gap:.2rem"></span><span><b>העיגול הכחול:</b> כמה מהשאלות הרלוונטיות לחתך קיבלו מענה. תוכנית קונקרטית נספרת כשאלה שלמה, ועמדה כללית כחצי. במצב ״כל הנושא״ נספרות כל השאלות</span></div>
       <div><b>עוגנים במציאות:</b> ההתחייבות המרכזית נבדקת לפי ארבע שאלות. יש יעד מדיד? יש לוח זמנים? כתוב כמה זה יעלה או מאיפה יבוא הכסף? כתוב איך זה יבוצע? אנחנו לא מדביקים תווית כמו "הבטחת סרק". אתם רואים מה יש ומה חסר.</div>
     </div>
   </details>
@@ -174,7 +182,7 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
       <li>כל רשימה נבדקת לפי אותן שאלות בדיוק.</li>
       <li>רק מסמכים שהרשימה פרסמה בעצמה. בלי ראיונות ובלי הערכות שלנו.</li>
       <li>סדר הרשימות אקראי ומשתנה בכל כניסה.</li>
-      <li>הבחירה "מי אני" רק ממליצה על נושאים. כל הנושאים וכל הרשימות תמיד זמינים.</li>
+      <li>הבחירה "מי אני" יוצרת חתך בתוך הנושא: מוצגות קודם השאלות הרלוונטיות לפרופיל. תמיד אפשר לעבור ל״כל הנושא״.</li>
       <li>ביטחון לאומי ומדיניות חוץ לא נבדקים כאן. ביטחון אישי כן נבדק.</li>
       <li>"לא מצאנו" הוא עובדה ולא ביקורת: הנושא לא מופיע במסמך.</li>
     </ol></div>
@@ -383,6 +391,58 @@ const PROFILES=[
  {k:"arab",ic:"🤝",t:"מהחברה הערבית",s:["safe","home","work","faith"]},
  {k:"student",ic:"🎓",t:"סטודנט/ית או צעיר/ה",s:["home","cart","work","move"]}
 ];
+
+/* מטריצת התאמה: מי אני × נושא.
+   כל ערך הוא מערך אינדקסים מתוך רשימת השאלות של SITS.
+   אם אין חתך מוגדר, מוצגות כל שאלות הנושא. */
+const PROFILE_MATRIX={
+  young:{
+    home:[0,1,2,3], cart:[0,1,2,3], kids:[0,1,2,3,4,5], health:[0,1,2,3],
+    work:[0,1,2], move:[0,2,3], serve:[1,2,3], faith:[0,1,2], age:[0,3], safe:[0,2]
+  },
+  work:{
+    work:[0,1,2,3], cart:[0,1,2,3], home:[0,1,2,3], move:[0,1,3],
+    kids:[0,1,2,3], health:[0,1,2], serve:[1,2,3], faith:[0,1], safe:[0,1]
+  },
+  senior:{
+    age:[0,1,2,3], health:[0,1,2,3], cart:[0,2,3], safe:[0,1,2],
+    move:[0,1,2], home:[2,3], work:[0,2], faith:[0,1]
+  },
+  periph:{
+    move:[0,1,3], health:[0,1,2,3], safe:[0,1,3], home:[0,1,3],
+    work:[1,2,3], kids:[0,2,3,4], cart:[0,1,2], age:[2,3]
+  },
+  reserve:{
+    serve:[0,1,2,3], home:[1,2,3], work:[0,1,2], kids:[0,1,2,3],
+    health:[2,3], cart:[2,3], move:[0,1], faith:[0,1]
+  },
+  relig:{
+    faith:[0,1,2,3], serve:[0,1,2,3], kids:[0,1,2,3,4,5], home:[0,1,2],
+    cart:[0,1,2], work:[0,1,2], move:[0,2], age:[0,2]
+  },
+  arab:{
+    safe:[0,1,2,3], home:[0,1,2,3], work:[0,1,2,3], faith:[3],
+    kids:[0,1,2,3,4,5], health:[0,1,2,3], move:[0,1,3], cart:[0,1,2,3]
+  },
+  student:{
+    home:[0,1,2,3], cart:[0,1,2,3], work:[0,1,2,3], move:[0,1,2,3],
+    kids:[2,5], serve:[1,2,3], health:[0,2], faith:[0,1]
+  }
+};
+
+function profileName(){
+  const p=PROFILES.find(x=>x.k===st.profile);
+  return p?p.t:null;
+}
+function sliceIndexes(sit){
+  if(st.mode!=="tailored" || !st.profile) return sit.c.map((_,i)=>i);
+  const m=PROFILE_MATRIX[st.profile]||{};
+  return (m[sit.k]||sit.c.map((_,i)=>i)).filter(i=>i>=0 && i<sit.c.length);
+}
+function sliceItems(sit,items){
+  return sliceIndexes(sit).map(i=>items[i]);
+}
+
 const SHORT={home:"דיור",cart:"יוקר המחיה",kids:"ילדים וחינוך",safe:"ביטחון אישי",work:"פרנסה ומסים",health:"בריאות וסיעוד",move:"תחבורה",serve:"שירות ונטל",faith:"דת ומדינה",age:"פנסיה וזקנה"};
 const ICON={ok:"✓",mid:"◯",none:"—"}, WORD={ok:"תוכנית קונקרטית",mid:"עמדה כללית",none:"לא נמצאה מדיניות"};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -396,7 +456,7 @@ const ball=(f,size=26)=>{const q=Math.round(f*4)/4,r=size/2-2,c=size/2;let fill=
 const coverText=items=>{const o=items.filter(i=>i[0]===OK).length,m=items.filter(i=>i[0]===MID).length;return `מתוך ${items.length} שאלות: ${o} עם תוכנית קונקרטית, ${m} עם עמדה כללית`};
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const ORDER=shuffle(Object.keys(P));
-const st={step:1,profile:null,sit:null,sel:new Set(ORDER),open:null,filter:false};
+const st={step:1,profile:null,sit:null,sel:new Set(ORDER),open:null,filter:false,mode:"tailored"};
 const main=document.getElementById("main");
 const reduce=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -413,7 +473,7 @@ function stepper(){
 function screen1(){
   return `<section class="screen">
     <div class="q-h"><span class="n">שלב 1 מתוך 3</span><h1>מי את/ה?</h1>
-      <p>נמליץ לך על הנושאים שהכי רלוונטיים. אפשר לדלג, וכל הנושאים יישארו זמינים.</p></div>
+      <p>הבחירה תשפיע על החתך שיוצג בתוך כל נושא. אפשר לדלג ולקבל את הנושא המלא.</p></div>
     <div class="choices">${PROFILES.map(p=>`<button type="button" class="choice" data-prof="${p.k}" aria-pressed="${st.profile===p.k}"><span class="ic" aria-hidden="true">${p.ic}</span>${esc(p.t)}</button>`).join("")}</div>
     <button type="button" class="secondary" data-prof="" style="align-self:flex-start">דלג: הראו לי את כל הנושאים</button>
     <button type="button" class="ghost" data-browse>או: לראות את כל העמדות של רשימה אחת ←</button>
@@ -424,45 +484,64 @@ function screen2(){
   const btn=s=>`<button type="button" class="choice" data-sit="${s.k}"><span class="ic" aria-hidden="true">${s.ic}</span>${esc(s.t)}${rec.includes(s.k)?'<span class="tag">מומלץ לך</span>':""}</button>`;
   const recS=SITS.filter(s=>rec.includes(s.k)), rest=SITS.filter(s=>!rec.includes(s.k));
   return `<section class="screen">
-    <div class="q-h"><span class="n">שלב 2 מתוך 3</span><h1>מה הכי מעסיק אותך?</h1><p>בחרו נושא אחד. אחר כך אפשר לעבור בקלות לנושאים אחרים.</p></div>
+    <div class="q-h"><span class="n">שלב 2 מתוך 3</span><h1>מה הכי מעסיק אותך?</h1><p>בחרו נושא אחד. בהשוואה נציג קודם את הסעיפים הרלוונטיים לפרופיל שבחרתם.</p></div>
     ${recS.length?`<p class="sub-h">מומלץ עבורך</p><div class="choices">${recS.map(btn).join("")}</div><p class="sub-h">עוד נושאים</p>`:""}
     <div class="choices">${rest.map(btn).join("")}</div>
     <button type="button" class="ghost" data-go-btn="1">→ חזרה לשלב הקודם</button>
   </section>`;
 }
 function screen3(){
-  const sit=SITS.find(s=>s.k===st.sit), ids=ORDER.filter(id=>st.sel.has(id));
+  const sit=SITS.find(s=>s.k===st.sit), ids=ORDER.filter(id=>st.sel.has(id)), pn=profileName();
+  const tailored=st.mode==="tailored"&&pn;
   return `<section class="screen">
-    <div class="res-h"><span class="small muted">שלב 3 מתוך 3 · ההשוואה</span><h1>${sit.ic} ${esc(sit.t)}</h1>
-      <p class="muted">מה כל רשימה כתבה שתעשה. לחצו על רשימה כדי לראות פרטים ומקור.</p></div>
+    <div class="res-h"><span class="small muted">שלב 3 מתוך 3 · ההשוואה</span>
+      <h1>${sit.ic} ${esc(sit.t)}</h1>
+      <p class="muted">${tailored?`חתך מותאם ל־${esc(pn)} בתוך הנושא שבחרת.`:"כל הסעיפים שנבדקו בנושא, ללא התאמה לפרופיל."}</p></div>
+
+    ${pn?`<div class="matrixbar" role="group" aria-label="אופן הצגת ההשוואה">
+      <span class="mxlabel">איך להציג את התוצאות?</span>
+      <button type="button" class="matrixbtn" data-mode="tailored" aria-pressed="${st.mode==="tailored"}">מותאם אליי</button>
+      <button type="button" class="matrixbtn" data-mode="full" aria-pressed="${st.mode==="full"}">כל הנושא</button>
+    </div>`:""}
+
+    ${tailored?`<div class="tailored"><b>${esc(pn)} × ${esc(SHORT[sit.k])}</b><br>
+      המפלגות מושוות רק לפי ${sliceIndexes(sit).length} הסעיפים הרלוונטיים לחתך הזה. אפשר לעבור ל״כל הנושא״ בכל רגע.</div>`:""}
+
     <div class="topics" role="group" aria-label="החלפת נושא">${SITS.map(s=>`<button type="button" class="topic" data-sit="${s.k}" aria-pressed="${s.k===st.sit}">${s.ic} ${SHORT[s.k]}</button>`).join("")}</div>
     <div class="toolrow"><button type="button" class="secondary" data-filter aria-expanded="${st.filter}">סינון רשימות (${ids.length} מתוך ${ORDER.length})</button></div>
     ${st.filter?`<div class="filter"><span class="small muted">לחצו כדי להוסיף או להסיר רשימה:</span><div class="fchips">${ORDER.map(id=>`<button type="button" class="fchip" data-sel="${id}" aria-pressed="${st.sel.has(id)}"><span class="lt" aria-hidden="true">${esc(P[id].letters)}</span>${esc(P[id].name)}</button>`).join("")}</div></div>`:""}
     <div class="cards">${ids.length?ids.map(id=>card(id,sit)).join(""):'<p class="pending">בחרו לפחות רשימה אחת בסינון.</p>'}</div>
     <p class="pending"><b>9 רשימות בהכנה:</b> ${PENDING.map(([n,l])=>`${esc(n)} (${esc(l)})`).join(" · ")}. לרשימות האלה אין מצע כתוב לבחירות 2026, והן ייבדקו לפי מסמכים רשמיים אחרים.</p>
-    <p class="small muted">הסדר של הרשימות אקראי ומשתנה בכל כניסה.</p>
+    <p class="small muted">הסדר של הרשימות אקראי ומשתנה בכל כניסה. החתך משנה אילו סעיפים נספרים ומוצגים, לא את נוסח המצע.</p>
   </section>`;
 }
 function card(id,sit){
-  const p=P[id],[line,items]=p.s[sit.k],s=overall(items),open=st.open===id;
+  const p=P[id],[line,items]=p.s[sit.k],idxs=sliceIndexes(sit),viewItems=idxs.map(i=>items[i]);
+  const s=overall(viewItems),open=st.open===id;
   const a=(A[id]||{})[sit.k];
   let anc="";
   if(a){const v=a.slice(1),rel=v.filter(x=>x!=="na"),n=rel.filter(x=>x===1).length;
     anc=`<div class="block"><h3>ההתחייבות המרכזית, כלשונה</h3><blockquote>״${esc(a[0])}״</blockquote>
       <h3 style="margin-top:.4rem">עוגנים במציאות: ${n} מתוך ${rel.length}</h3>
       <div class="anchors">${v.map((x,i)=>`<span class="anc ${x===1?"y":x==="na"?"na":"n"}"><b aria-hidden="true">${x===1?"✓":x==="na"?"·":"✗"}</b>${ANAMES[i]}${x===1?"":x==="na"?": לא נדרש":": חסר"}</span>`).join("")}</div></div>`}
+  const pn=profileName(),tailored=st.mode==="tailored"&&pn;
   return `<article class="card">
     <button type="button" class="card-btn" data-open="${id}" aria-expanded="${open}" aria-controls="cb-${id}">
       <span class="ballot" aria-hidden="true">${esc(p.letters)}</span>
       <span class="card-main"><span class="card-name">${esc(p.name)} <span class="sr-only">, אותיות ${esc(p.letters)}</span></span>
         <span class="pill ${s}"><span aria-hidden="true">${ICON[s]}</span>${WORD[s]}</span>
-        <span class="card-line">${esc(line)}</span></span>
+        <span class="card-line">${esc(line)}</span>
+        ${tailored?`<span class="small muted">בחתך: ${esc(pn)} · ${idxs.length} מתוך ${items.length} סעיפים</span>`:""}
+      </span>
       <span class="chev" aria-hidden="true">⌄</span>
     </button>
     <div class="card-body" id="cb-${id}" ${open?"":"hidden"}>
-      <div class="cover">${ball(score(items),30)}<span>${coverText(items)}</span></div>
+      <div class="cover">${ball(score(viewItems),30)}<span>${coverText(viewItems)}</span></div>
       ${anc}
-      <div class="block"><h3>מה נבדק</h3><ul class="items">${items.map((it,i)=>`<li><span class="st ${it[0]}" aria-hidden="true">${ICON[it[0]]}</span><span><span class="lbl">${esc(sit.c[i])}:</span> ${it[0]===NO?'<span class="muted">לא נמצא במקור</span>':esc(it[1])}<span class="sr-only"> (${WORD[it[0]]})</span></span></li>`).join("")}</ul></div>
+      <div class="block"><h3>${tailored?"מה רלוונטי לפרופיל שלך":"מה נבדק"}</h3>
+        <ul class="items">${idxs.map(i=>{const it=items[i];return `<li><span class="st ${it[0]}" aria-hidden="true">${ICON[it[0]]}</span><span><span class="lbl">${esc(sit.c[i])}:</span> ${it[0]===NO?'<span class="muted">לא נמצא במקור</span>':esc(it[1])}<span class="sr-only"> (${WORD[it[0]]})</span></span></li>`}).join("")}</ul>
+      </div>
+      ${tailored?`<div class="block"><h3>ומה הושמט מהחתך?</h3><p class="small muted">${items.map((_,i)=>i).filter(i=>!idxs.includes(i)).map(i=>esc(sit.c[i])).join(" · ")||"לא הושמטו סעיפים בנושא זה."}</p></div>`:""}
       <p class="src">מקור: <a href="${p.src.u}" target="_blank" rel="noopener">${esc(p.src.t)}</a> (${esc(p.src.d)})</p>
       <button type="button" class="secondary" data-sheet="${id}" style="align-self:flex-start">כל הנושאים של ${esc(p.name)}</button>
     </div>
@@ -472,7 +551,7 @@ function card(id,sit){
 function render(){
   stepper();
   main.innerHTML=st.step===1?screen1():st.step===2?screen2():screen3();
-  main.querySelectorAll("[data-prof]").forEach(b=>b.addEventListener("click",()=>{st.profile=b.dataset.prof||null;go(2)}));
+  main.querySelectorAll("[data-prof]").forEach(b=>b.addEventListener("click",()=>{st.profile=b.dataset.prof||null;st.mode=st.profile?"tailored":"full";go(2)}));
   main.querySelectorAll("[data-browse]").forEach(b=>b.addEventListener("click",()=>openSheet(ORDER[0],b,true)));
   main.querySelectorAll(".choice[data-sit]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sit;st.open=null;go(3)}));
   main.querySelectorAll(".topic[data-sit]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sit;st.open=null;render();main.querySelector(`.topic[data-sit="${st.sit}"]`).focus()}));
@@ -481,6 +560,7 @@ function render(){
   main.querySelectorAll("[data-sel]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.sel;st.sel.has(id)?st.sel.delete(id):st.sel.add(id);render();main.querySelector(`[data-sel="${id}"]`).focus()}));
   main.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.open;st.open=st.open===id?null:id;render();main.querySelector(`[data-open="${id}"]`).focus()}));
   main.querySelectorAll("[data-sheet]").forEach(b=>b.addEventListener("click",()=>openSheet(b.dataset.sheet,b)));
+  main.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{st.mode=b.dataset.mode;st.open=null;render();main.querySelector(`[data-mode="${st.mode}"]`)?.focus()}));
 }
 document.querySelectorAll(".stepper button").forEach(b=>b.addEventListener("click",()=>{const n=+b.dataset.go;
   if(n===3&&!st.sit){const pr=PROFILES.find(p=>p.k===st.profile);st.sit=pr?pr.s[0]:"cart";}
