@@ -7,7 +7,6 @@
 <meta name="description" content="השוואה פשוטה ונגישה בין מצעי המפלגות לפי מי אני, הנושא שמעסיק אותי והחיים עצמם.">
 <meta name="theme-color" content="#2457a6">
 <link rel="canonical" href="https://21061976.github.io/2026-vote-compass-/">
-
 <meta property="og:locale" content="he_IL">
 <meta property="og:type" content="website">
 <meta property="og:title" content="מצפן אזרחי בחירות 2026">
@@ -16,17 +15,16 @@
 <meta property="og:site_name" content="מצפן אזרחי בחירות 2026">
 <meta property="og:image" content="https://21061976.github.io/2026-vote-compass-/preview.png">
 <meta property="og:image:alt" content="מצפן אזרחי בחירות 2026">
-
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="מצפן אזרחי בחירות 2026">
 <meta name="twitter:description" content="השוואה פשוטה ונגישה בין מצעי המפלגות לפי מי אני, הנושא שמעסיק אותי והחיים עצמם.">
 <meta name="twitter:image" content="https://21061976.github.io/2026-vote-compass-/preview.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@400;500;700&display=swap">
 <style>
-:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+body{margin:0}
+img{max-width:100%}
 
 /* Layout: a three-step guided flow, one question per screen, like a government service form.
    Stepper on top, big answer buttons, one plain result card per list. Details open only on request. */
@@ -53,7 +51,7 @@
 
 [hidden]{display:none!important}
 *,*::before,*::after{box-sizing:border-box}
-html{font-size:calc(17px * var(--scale,1))}
+html{font-size:calc(17px * var(--scale,1));scroll-padding-top:8.5rem}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);line-height:1.55}
 button{font:inherit;color:inherit}
 a{color:var(--accent);text-underline-offset:3px}
@@ -77,7 +75,6 @@ p{margin:0} h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
 .stepper .lab{font-size:.85rem;color:var(--muted)}
 .stepper [aria-current="step"] .rail,.stepper .done .rail{background:var(--accent)}
 .stepper [aria-current="step"] .lab{color:var(--ink);font-weight:700}
-.stepper button:disabled{cursor:default}
 
 /* screens */
 .screen{display:flex;flex-direction:column;gap:1rem}
@@ -93,7 +90,6 @@ p{margin:0} h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
 .choice[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
 .sub-h{font-size:.95rem;font-weight:700;color:var(--muted);margin-top:.3rem}
 .ghost{align-self:flex-start;background:none;border:0;color:var(--accent);font-weight:500;text-decoration:underline;text-underline-offset:4px;cursor:pointer;min-height:44px;padding:0}
-.primary{background:var(--accent);color:var(--on-accent);border:0;border-radius:12px;min-height:52px;padding:0 1.4rem;font-weight:700;font-size:1.05rem;cursor:pointer}
 .secondary{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;min-height:48px;padding:0 1.1rem;font-weight:500;cursor:pointer}
 
 /* results */
@@ -138,15 +134,19 @@ blockquote{margin:0;font-family:var(--f-display);font-size:1.08rem;line-height:1
 .anc.n{color:var(--muted)}
 .anc.na{color:var(--muted);border-style:dashed}
 .src{font-size:.86rem;color:var(--muted)}
+.read{display:flex;gap:.3rem .8rem;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--accent-soft);border-radius:12px;padding:.5rem .9rem}
+.read a{font-weight:700;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;gap:.35rem}
+.read a:hover{text-decoration:underline}
+.crumbs{display:flex;flex-wrap:wrap;gap:.3rem .9rem;align-items:center;font-size:.92rem;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.4rem .8rem}
+.crumbs button{background:none;border:0;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:44px;padding:0 .2rem}
+.pager{display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.acc{border-bottom:1px solid var(--line)}
+.acc>button{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:start;padding:.75rem .2rem;border:0;background:none;text-align:start;cursor:pointer}
+.acc>button>span{min-width:0}
+.acc>button b{display:block}
+.acc>button[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.acc-body{padding:0 .2rem 1rem;display:flex;flex-direction:column;gap:.8rem}
 .pending{border:1px dashed var(--line);border-radius:14px;padding:.8rem 1rem;font-size:.9rem;color:var(--muted)}
-
-
-.matrixbar{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.7rem .8rem}
-.matrixbar .mxlabel{font-size:.88rem;color:var(--muted);margin-inline-end:auto}
-.matrixbtn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;min-height:42px;padding:0 .9rem;cursor:pointer;font-weight:700}
-.matrixbtn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.tailored{background:var(--accent-soft);border:1px solid var(--ball-ring);border-radius:14px;padding:.7rem .85rem;font-size:.92rem}
-.tailored b{color:var(--accent)}
 
 details.help{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.3rem 1rem}
 details.help summary{cursor:pointer;font-weight:700;min-height:48px;display:flex;align-items:center}
@@ -161,7 +161,7 @@ details.help ol{margin:0;padding-inline-start:1.2rem;display:flex;flex-direction
 .big{font-family:var(--f-display);font-weight:900;font-size:2.3rem;line-height:1;border:2px solid var(--ink);padding:.25rem .7rem;border-radius:4px;background:var(--bg)}
 .sheet-h h2{font-family:var(--f-display);font-size:1.5rem}
 .x{margin-inline-start:auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;min-width:44px;min-height:44px;cursor:pointer;font-size:1.1rem}
-.srow{width:100%;display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start;padding:.7rem .2rem;border:0;border-bottom:1px solid var(--line);background:none;text-align:start;cursor:pointer}
+.srow{width:100%;display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start;padding:.7rem .2rem;border-bottom:1px solid var(--line)}
 .srow>span{min-width:0}
 .srow b{display:block}
 footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;gap:.3rem;border-top:1px solid var(--line);padding-top:1rem}
@@ -170,6 +170,8 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
 </style>
 </head>
 <body>
+
+
 <div dir="rtl" lang="he">
 <div class="app">
   <header class="top">
@@ -196,7 +198,7 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
       <div class="row"><span class="st ok" aria-hidden="true">✓</span><span><b>תוכנית קונקרטית:</b> יש מספר, תקציב, חוק או מנגנון (בשתי שאלות לפחות)</span></div>
       <div class="row"><span class="st mid" aria-hidden="true">◯</span><span><b>עמדה כללית:</b> יש התייחסות, אבל בלי מנגנון ברור</span></div>
       <div class="row"><span class="st none" aria-hidden="true">—</span><span><b>לא נמצאה מדיניות</b> במסמך שבדקנו</span></div>
-      <div class="row"><span id="ball-legend" style="display:flex;gap:.2rem"></span><span><b>העיגול הכחול:</b> כמה מהשאלות הרלוונטיות לחתך קיבלו מענה. תוכנית קונקרטית נספרת כשאלה שלמה, ועמדה כללית כחצי. במצב ״כל הנושא״ נספרות כל השאלות</span></div>
+      <div class="row"><span id="ball-legend" style="display:flex;gap:.2rem"></span><span><b>העיגול הכחול:</b> כמה מהשאלות קיבלו מענה. תוכנית קונקרטית נספרת כשאלה שלמה, ועמדה כללית כחצי. מלא = תוכנית קונקרטית בכל השאלות</span></div>
       <div><b>עוגנים במציאות:</b> ההתחייבות המרכזית נבדקת לפי ארבע שאלות. יש יעד מדיד? יש לוח זמנים? כתוב כמה זה יעלה או מאיפה יבוא הכסף? כתוב איך זה יבוצע? אנחנו לא מדביקים תווית כמו "הבטחת סרק". אתם רואים מה יש ומה חסר.</div>
     </div>
   </details>
@@ -207,7 +209,7 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
       <li>כל רשימה נבדקת לפי אותן שאלות בדיוק.</li>
       <li>רק מסמכים שהרשימה פרסמה בעצמה. בלי ראיונות ובלי הערכות שלנו.</li>
       <li>סדר הרשימות אקראי ומשתנה בכל כניסה.</li>
-      <li>הבחירה "מי אני" יוצרת חתך בתוך הנושא: מוצגות קודם השאלות הרלוונטיות לפרופיל. תמיד אפשר לעבור ל״כל הנושא״.</li>
+      <li>הבחירה "מי אני" רק משנה את סדר ההצגה: נושאים מומלצים, ובתוך כל נושא השאלות הרלוונטיות לך קודם. הציון של כל רשימה מחושב תמיד על כל השאלות, ולכן הוא לא משתנה לפי הפרופיל.</li>
       <li>ביטחון לאומי ומדיניות חוץ לא נבדקים כאן. ביטחון אישי כן נבדק.</li>
       <li>"לא מצאנו" הוא עובדה ולא ביקורת: הנושא לא מופיע במסמך.</li>
     </ol></div>
@@ -215,8 +217,8 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
 
   <footer>
     <p>הכלי לא ממליץ על אף רשימה. עודכן: 1.10.2026 · גרסת עבודה.</p>
-    <p>בגרסה זו נכללות רק 13 רשימות שעברו את אחוז החסימה לפחות בסקר אחד מבין הסקרים האחרונים שנסקרו על ידי המכון הישראלי לדמוקרטיה.</p>
-    <p>5 רשימות מקודדות, 8 רשימות רלוונטיות נוספות בהכנה. הרשימה המלאה של 38 הרשימות: <a href="https://www.idi.org.il/policy/parties-and-elections/elections/2026-1/" target="_blank" rel="noopener">המכון הישראלי לדמוקרטיה</a>.</p>
+    <p>בגרסה זו נכללות 13 רשימות שעברו את אחוז החסימה בסקר אחד לפחות מבין הסקרים האחרונים. 5 מוכנות ו־8 בהכנה.</p>
+    <p>לא נכללו בגרסה זו: <span id="out-scope"></span>. רשימת כל 38 הרשימות: <a href="https://www.idi.org.il/policy/parties-and-elections/elections/2026-1/" target="_blank" rel="noopener">המכון הישראלי לדמוקרטיה</a>.</p>
   </footer>
 </div>
 <div class="scrim" id="scrim" hidden></div>
@@ -321,8 +323,27 @@ mil:{name:"המילואימניקים–הכלכלית",letters:"די",head:"י�
  },
  x:{gov:[OK,"הגבלת כהונת ראש הממשלה לשמונה שנים; חוק יסוד: החקיקה; ביקורת חיצונית על מערכת המשפט"],env:[NO,""],culture:[NO,""]}
 },
+bw:{name:"כחול לבן",letters:"כן",head:"בני גנץ",src:{t:"מצע 2021 ועקרונות 2025, באתר המפלגה",d:"2021–2025",u:"https://kachollavan.org.il/wp-content/uploads/2021/07/matza.pdf"},
+ prio:["מדינה יהודית ודמוקרטית","מדינה חזקה ובטוחה","משטר דמוקרטי, משילות וביטחון פנים"],
+ s:{
+  home:["הגדלת היצע הדירות בדגש על הפריפריה, בלי יעדים",[[MID,"הגדלת היצע הדירות בדגש על הפריפריה"],[NO,""],[NO,""],[NO,""]]],
+  cart:["הצהרה על \"פתרון דחוף\" ליוקר המחיה, בלי צעדים",[[NO,""],[NO,""],[NO,""],[NO,""]]],
+  kids:["חינוך חינם מהגיל הרך ועד סוף התואר, בהדרגה",[[MID,"השקעה גדולה בחינוך לגיל הרך"],[OK,"חינוך חינם בפועל מהגיל הרך ועד סוף התואר, בהדרגה"],[MID,"התאמת ההוראה למאה ה־21"],[NO,""],[NO,""],[NO,""]]],
+  safe:["איסוף נשק ותוכנית ארצית נגד האלימות בחברה הערבית",[[MID,"שיתוף פעולה בין המשטרה לרשויות"],[OK,"איסוף נשק ומלחמה במשפחות הפשע"],[MID,"מאבק באלימות במשפחה ובאלימות מינית"],[OK,"תוכנית ארצית למיגור האלימות בחברה הערבית"]]],
+  work:["חוק העובד העצמאי: דמי אבטלה לעצמאים כמו לשכירים",[[NO,""],[OK,"חוק העובד העצמאי והשוואת דמי האבטלה לשכירים"],[NO,""],[NO,""]]],
+  health:["הגדלת מספר הרופאים והאחיות, בלי מספרים",[[NO,""],[MID,"הגדלת מספר הרופאים, המתמחים ואנשי הסיעוד"],[NO,""],[NO,""]]],
+  move:["תחבורה בשבת במתכונת מצומצמת; עוד מסילות ונתיבים",[[MID,"תחבורה ציבורית זמינה ונגישה"],[MID,"חיזוק הרכבות ומסילות נוספות"],[OK,"תחבורה בשבת במתכונת מצומצמת שהרשויות יגדירו"],[MID,"נתיבים נוספים"]]],
+  serve:["חוק גיוס לפי הצעת מערכת הביטחון ומתווה שירות לכל המגזרים",[[OK,"חוק גיוס שמבוסס על הצעת מערכת הביטחון"],[NO,""],[OK,"מתווה שירות חדש לכל המגזרים"],[NO,""]]],
+  faith:["תחבורה בשבת במתכונת מצומצמת; ברית זוגיות",[[MID,"ברית זוגיות לזוגות להט״ב"],[OK,"תחבורה בשבת במתכונת מוגדרת"],[MID,"גיור \"מאיר פנים\" לפי ההלכה"],[MID,"שוויון לאזרחים הערבים, הדרוזים והבדואים"]]],
+  age:["העלאת קצבת הזקנה והצמדתה לשכר הממוצע",[[OK,"העלאת קצבת הזקנה והצמדתה לשינויים בשכר הממוצע"],[MID,"שינוי מודל היציאה לפנסיה"],[NO,""],[NO,""]]]
+ },
+ x:{gov:[MID,"שמירה על הפרדת הרשויות ושלטון החוק"],env:[OK,"עמידה ביעדי הפליטה לשנת 2030"],culture:[MID,"שמירה על חופש היצירה"]}
+}
 };
 const PENDING=[["הליכוד","מחל"],["ש״ס","שס"],["יהדות התורה","ג"],["הציונות הדתית–זהות","ט"],["עוצמה יהודית","ב"],["עמך ישראל","ך"],["רע״ם","עם"],["הרשימה המשותפת","ודם"]];
+/* Lists shown in this version. Data for other coded lists stays in P so they can be restored by adding their key here. */
+const IN_SCOPE=["yb","bey","ysh","dem","mil"];
+const OUT_OF_SCOPE=["כחול לבן","נעם"];
 
 
 /* Four anchors for each list's headline commitment in a situation: [verbatim quote, target, timeline, cost/funding, mechanism]; 1=yes 0=no "na"=not relevant (regulatory/legal change with no public spending) */
@@ -372,16 +393,48 @@ const A={
   work:["הטבות מס משמעותיות לחברות טכנולוגיות המעסיקות את רוב כוח האדם שלהן (כ 70 אחוז) בנגב, בגליל או בבקעה",0,0,0,1],
   health:["תוכנית \"חוזרים מהקרב\"",0,0,0,0],
   serve:["כל אזרח במדינת ישראל... בהגיעו לגיל 18 ישרת את המדינה",1,0,"na",1]},
+ bw:{home:["נגדיל משמעותית את היצע הדירות, בדגש על הפריפריה",0,0,0,0],
+  kids:["מערכת חינוך חינם הלכה למעשה החל מהחינוך לגיל הרך ועד לסיום תואר",1,0,0,0],
+  safe:["תוכנית ארצית למיגור האלימות בחברה הערבית",0,0,0,0],
+  work:["נחוקק את חוק העובד העצמאי",0,0,0,1],
+  health:["נעלה את מספר הרופאים/ות והאחים/ות",0,0,0,0],
+  move:["תחבורה בשבת באופן מצומצם ומוגדר על ידי הרשויות המקומיות",0,0,"na",1],
+  serve:["נחוקק חוק גיוס ראוי, המבוסס על הצעת החוק של מערכת הביטחון",0,0,"na",1],
+  faith:["תחבורה בשבת באופן מצומצם ומוגדר על ידי הרשויות המקומיות",0,0,"na",1],
+  age:["נעלה את קצבת הזקנה... נצמיד אותה לשינויים בשכר הממוצע",0,0,0,1]}
 };
 const ANAMES=["יעד מדיד","לוח זמנים","עלות או מקור מימון","מנגנון ביצוע"];
-function anchors(id,k,full){
-  const a=(A[id]||{})[k]; if(!a) return "";
-  const vals=a.slice(1), rel=vals.filter(v=>v!=="na"), n=rel.filter(v=>v===1).length;
-  const chips=vals.map((v,i)=>`<span class="anc ${v===1?"y":v==="na"?"na":"n"}">${v===1?"✓":v==="na"?"·":"✗"} ${ANAMES[i]}${v==="na"?" (לא נדרש)":""}</span>`).join("");
-  if(!full) return `<span class="ancline"><span class="ancn">עוגנים במציאות: ${n} מתוך ${rel.length}</span></span>`;
-  return `<div class="ancbox"><p class="small"><b>ההתחייבות המרכזית, ציטוט מהמקור:</b></p><blockquote>״${esc(a[0])}״</blockquote><div class="ancline"><span class="ancn">עוגנים במציאות: ${n} מתוך ${rel.length}</span>${chips}</div></div>`;
-}
 
+/* Where each list writes about each topic. Missing = the list's main source. Deep links add a text fragment so supporting browsers scroll to the quoted passage. */
+const TOPIC_SRC={
+ bey:{home:"https://be-yahad.org.il/plans/housing/",cart:"https://be-yahad.org.il/plans/yokermichya/",kids:"https://be-yahad.org.il/plans/education/",safe:"https://be-yahad.org.il/plans/personal-security/",work:"https://be-yahad.org.il/plans/smb/",health:"https://be-yahad.org.il/plans/health/",move:"https://be-yahad.org.il/plans/religionandstate/",serve:"https://be-yahad.org.il/plans/meshartim-law/",faith:"https://be-yahad.org.il/plans/religionandstate/",age:"https://be-yahad.org.il/plans/%d7%aa%d7%95%d7%9b%d7%a0%d7%99%d7%aa-%d7%9c%d7%90%d7%95%d7%9e%d7%99%d7%aa-%d7%9c%d7%94%d7%96%d7%93%d7%a7%d7%a0%d7%95%d7%aa-%d7%91%d7%9b%d7%91%d7%95%d7%93/"},
+ ysh:{home:"https://yasharwitheisenkot.com/principles/economics/",cart:"https://yasharwitheisenkot.com/principles/economics/",work:"https://yasharwitheisenkot.com/principles/economics/",move:"https://yasharwitheisenkot.com/principles/economics/",kids:"https://yasharwitheisenkot.com/principles/education/",safe:"https://yasharwitheisenkot.com/principles/homeland-security/",serve:"https://yasharwitheisenkot.com/principles/service-for-all/",health:"https://yasharwitheisenkot.com/principles/senior-citizens/",age:"https://yasharwitheisenkot.com/principles/senior-citizens/"}
+};
+const PDF_SRC=new Set(["dem","bw"]);
+function topicLink(id,k){
+  const base=(TOPIC_SRC[id]&&TOPIC_SRC[id][k])||P[id].src.u, a=(A[id]||{})[k];
+  if(!a||PDF_SRC.has(id)) return base;
+  const snip=a[0].split("...")[0].split(" ").slice(0,6).join(" ").replace(/[״"]/g,"").trim();
+  return snip?`${base}#:~:text=${encodeURIComponent(snip)}`:base;
+}
+function readBox(id,k){
+  const p=P[id];
+  return `<div class="read"><a href="${topicLink(id,k)}" target="_blank" rel="noopener">לקריאה במקור: ${esc(p.name)} על ${SHORT[k]} <span aria-hidden="true">↗</span><span class="sr-only">(נפתח בלשונית חדשה)</span></a><span class="small muted">${esc(p.src.t)} · ${esc(p.src.d)}${PDF_SRC.has(id)?" · קובץ PDF":""}</span></div>`;
+}
+function anchorBlock(id,k){
+  const a=(A[id]||{})[k]; if(!a) return "";
+  const v=a.slice(1),rel=v.filter(x=>x!=="na"),n=rel.filter(x=>x===1).length;
+  return `<div class="block"><h3>ההתחייבות המרכזית, כלשונה</h3><blockquote>״${esc(a[0])}״</blockquote>
+    <h3 style="margin-top:.4rem">עוגנים במציאות: ${n} מתוך ${rel.length}</h3>
+    <div class="anchors">${v.map((x,i)=>`<span class="anc ${x===1?"y":x==="na"?"na":"n"}"><b aria-hidden="true">${x===1?"✓":x==="na"?"·":"✗"}</b>${ANAMES[i]}${x===1?"":x==="na"?": לא נדרש":": חסר"}</span>`).join("")}</div></div>`;
+}
+function checked(sit,items){
+  const li=i=>{const it=items[i];return `<li><span class="st ${it[0]}" aria-hidden="true">${ICON[it[0]]}</span><span><span class="lbl">${esc(sit.c[i])}:</span> ${it[0]===NO?'<span class="muted">לא נמצא במקור</span>':esc(it[1])}<span class="sr-only"> (${WORD[it[0]]})</span></span></li>`};
+  const all=items.map((_,i)=>i), f=focusIdx(sit.k), rest=all.filter(i=>!f.includes(i)), prof=PROFILES.find(p=>p.k===st.profile);
+  if(!prof||!rest.length) return `<div class="block"><h3>מה נבדק</h3><ul class="items">${all.map(li).join("")}</ul></div>`;
+  return `<div class="block"><h3>הכי רלוונטי לפרופיל שלך <span class="muted small">(${esc(prof.t)})</span></h3><ul class="items">${f.map(li).join("")}</ul></div>
+    <div class="block"><h3>שאר השאלות בנושא</h3><ul class="items">${rest.map(li).join("")}</ul></div>`;
+}
 const PROFILES=[
  {k:"young",ic:"👨‍👩‍👧",t:"משפחה צעירה",s:["home","cart","kids","health"]},
  {k:"work",ic:"💼",t:"שכיר/ה או עצמאי/ת",s:["work","cart","home","move"]},
@@ -392,58 +445,21 @@ const PROFILES=[
  {k:"arab",ic:"🤝",t:"מהחברה הערבית",s:["safe","home","work","faith"]},
  {k:"student",ic:"🎓",t:"סטודנט/ית או צעיר/ה",s:["home","cart","work","move"]}
 ];
-
-/* מטריצת התאמה: מי אני × נושא.
-   כל ערך הוא מערך אינדקסים מתוך רשימת השאלות של SITS.
-   אם אין חתך מוגדר, מוצגות כל שאלות הנושא. */
+/* Which questions inside each topic matter most to each profile (indexes into SITS[].c).
+   Used only to put those questions first and mark them. Grades are always computed on all questions,
+   so a list's grade never depends on which profile the reader picked. */
 const PROFILE_MATRIX={
-  young:{
-    home:[0,1,2,3], cart:[0,1,2,3], kids:[0,1,2,3,4,5], health:[0,1,2,3],
-    work:[0,1,2], move:[0,2,3], serve:[1,2,3], faith:[0,1,2], age:[0,3], safe:[0,2]
-  },
-  work:{
-    work:[0,1,2,3], cart:[0,1,2,3], home:[0,1,2,3], move:[0,1,3],
-    kids:[0,1,2,3], health:[0,1,2], serve:[1,2,3], faith:[0,1], safe:[0,1]
-  },
-  senior:{
-    age:[0,1,2,3], health:[0,1,2,3], cart:[0,2,3], safe:[0,1,2],
-    move:[0,1,2], home:[2,3], work:[0,2], faith:[0,1]
-  },
-  periph:{
-    move:[0,1,3], health:[0,1,2,3], safe:[0,1,3], home:[0,1,3],
-    work:[1,2,3], kids:[0,2,3,4], cart:[0,1,2], age:[2,3]
-  },
-  reserve:{
-    serve:[0,1,2,3], home:[1,2,3], work:[0,1,2], kids:[0,1,2,3],
-    health:[2,3], cart:[2,3], move:[0,1], faith:[0,1]
-  },
-  relig:{
-    faith:[0,1,2,3], serve:[0,1,2,3], kids:[0,1,2,3,4,5], home:[0,1,2],
-    cart:[0,1,2], work:[0,1,2], move:[0,2], age:[0,2]
-  },
-  arab:{
-    safe:[0,1,2,3], home:[0,1,2,3], work:[0,1,2,3], faith:[3],
-    kids:[0,1,2,3,4,5], health:[0,1,2,3], move:[0,1,3], cart:[0,1,2,3]
-  },
-  student:{
-    home:[0,1,2,3], cart:[0,1,2,3], work:[0,1,2,3], move:[0,1,2,3],
-    kids:[2,5], serve:[1,2,3], health:[0,2], faith:[0,1]
-  }
+  young:{home:[0,1,2,3],cart:[0,1,2,3],kids:[0,1,2,3,4,5],health:[0,1,2,3],work:[0,1,2],move:[0,2,3],serve:[1,2,3],faith:[0,1,2],age:[0,3],safe:[0,2]},
+  work:{work:[0,1,2,3],cart:[0,1,2,3],home:[0,1,2,3],move:[0,1,3],kids:[0,1,2,3],health:[0,1,2],serve:[1,2,3],faith:[0,1],safe:[0,1]},
+  senior:{age:[0,1,2,3],health:[0,1,2,3],cart:[0,2,3],safe:[0,1,2],move:[0,1,2],home:[2,3],work:[0,2],faith:[0,1]},
+  periph:{move:[0,1,3],health:[0,1,2,3],safe:[0,1,3],home:[0,1,3],work:[1,2,3],kids:[0,2,3,4],cart:[0,1,2],age:[2,3]},
+  reserve:{serve:[0,1,2,3],home:[1,2,3],work:[0,1,2],kids:[0,1,2,3],health:[2,3],cart:[2,3],move:[0,1],faith:[0,1]},
+  relig:{faith:[0,1,2,3],serve:[0,1,2,3],kids:[0,1,2,3,4,5],home:[0,1,2],cart:[0,1,2],work:[0,1,2],move:[0,2],age:[0,2]},
+  arab:{safe:[0,1,2,3],home:[0,1,2,3],work:[0,1,2,3],faith:[3],kids:[0,1,2,3,4,5],health:[0,1,2,3],move:[0,1,3],cart:[0,1,2,3]},
+  student:{home:[0,1,2,3],cart:[0,1,2,3],work:[0,1,2,3],move:[0,1,2,3],kids:[2,5],serve:[1,2,3],health:[0,2],faith:[0,1]}
 };
-
-function profileName(){
-  const p=PROFILES.find(x=>x.k===st.profile);
-  return p?p.t:null;
-}
-function sliceIndexes(sit){
-  if(st.mode!=="tailored" || !st.profile) return sit.c.map((_,i)=>i);
-  const m=PROFILE_MATRIX[st.profile]||{};
-  return (m[sit.k]||sit.c.map((_,i)=>i)).filter(i=>i>=0 && i<sit.c.length);
-}
-function sliceItems(sit,items){
-  return sliceIndexes(sit).map(i=>items[i]);
-}
-
+function focusIdx(k){const sit=SITS.find(s=>s.k===k),all=sit.c.map((_,i)=>i);
+  if(!st.profile)return all;const m=(PROFILE_MATRIX[st.profile]||{})[k];return m?m.filter(i=>i<sit.c.length):all}
 const SHORT={home:"דיור",cart:"יוקר המחיה",kids:"ילדים וחינוך",safe:"ביטחון אישי",work:"פרנסה ומסים",health:"בריאות וסיעוד",move:"תחבורה",serve:"שירות ונטל",faith:"דת ומדינה",age:"פנסיה וזקנה"};
 const ICON={ok:"✓",mid:"◯",none:"—"}, WORD={ok:"תוכנית קונקרטית",mid:"עמדה כללית",none:"לא נמצאה מדיניות"};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -456,8 +472,8 @@ const ball=(f,size=26)=>{const q=Math.round(f*4)/4,r=size/2-2,c=size/2;let fill=
   return `<svg class="hb" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${c}" cy="${c}" r="${r}" fill="var(--surface)" stroke="var(--ball-ring)" stroke-width="2"/>${fill}<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="var(--ball)" stroke-width="1.5"/></svg>`};
 const coverText=items=>{const o=items.filter(i=>i[0]===OK).length,m=items.filter(i=>i[0]===MID).length;return `מתוך ${items.length} שאלות: ${o} עם תוכנית קונקרטית, ${m} עם עמדה כללית`};
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const ORDER=shuffle(Object.keys(P));
-const st={step:1,profile:null,sit:null,sel:new Set(ORDER),open:null,filter:false,mode:"tailored"};
+const ORDER=shuffle(IN_SCOPE.filter(k=>P[k]));
+const st={step:1,profile:null,sit:null,sel:new Set(ORDER),open:new Set(),filter:false};
 const main=document.getElementById("main");
 const reduce=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -467,14 +483,13 @@ function go(step){st.step=step;render();window.scrollTo({top:0,behavior:reduce()
 function stepper(){
   document.querySelectorAll(".stepper button").forEach(b=>{const n=+b.dataset.go;
     b.removeAttribute("aria-current");b.classList.toggle("done",n<st.step);
-    if(n===st.step)b.setAttribute("aria-current","step");
-    b.disabled=false;});
+    if(n===st.step)b.setAttribute("aria-current","step");});
 }
 
 function screen1(){
   return `<section class="screen">
     <div class="q-h"><span class="n">שלב 1 מתוך 3</span><h1>מי את/ה?</h1>
-      <p>הבחירה תשפיע על החתך שיוצג בתוך כל נושא. אפשר לדלג ולקבל את הנושא המלא.</p></div>
+      <p>נמליץ על נושאים, ובתוך כל נושא נציג קודם את השאלות שהכי רלוונטיות לך. אפשר לדלג.</p></div>
     <div class="choices">${PROFILES.map(p=>`<button type="button" class="choice" data-prof="${p.k}" aria-pressed="${st.profile===p.k}"><span class="ic" aria-hidden="true">${p.ic}</span>${esc(p.t)}</button>`).join("")}</div>
     <button type="button" class="secondary" data-prof="" style="align-self:flex-start">דלג: הראו לי את כל הנושאים</button>
     <button type="button" class="ghost" data-browse>או: לראות את כל העמדות של רשימה אחת ←</button>
@@ -485,66 +500,51 @@ function screen2(){
   const btn=s=>`<button type="button" class="choice" data-sit="${s.k}"><span class="ic" aria-hidden="true">${s.ic}</span>${esc(s.t)}${rec.includes(s.k)?'<span class="tag">מומלץ לך</span>':""}</button>`;
   const recS=SITS.filter(s=>rec.includes(s.k)), rest=SITS.filter(s=>!rec.includes(s.k));
   return `<section class="screen">
-    <div class="q-h"><span class="n">שלב 2 מתוך 3</span><h1>מה הכי מעסיק אותך?</h1><p>בחרו נושא אחד. בהשוואה נציג קודם את הסעיפים הרלוונטיים לפרופיל שבחרתם.</p></div>
+    <div class="q-h"><span class="n">שלב 2 מתוך 3</span><h1>מה הכי מעסיק אותך?</h1><p>בחרו נושא אחד. אחר כך אפשר לעבור בקלות לנושאים אחרים.</p></div>
     ${recS.length?`<p class="sub-h">מומלץ עבורך</p><div class="choices">${recS.map(btn).join("")}</div><p class="sub-h">עוד נושאים</p>`:""}
     <div class="choices">${rest.map(btn).join("")}</div>
     <button type="button" class="ghost" data-go-btn="1">→ חזרה לשלב הקודם</button>
   </section>`;
 }
 function screen3(){
-  const sit=SITS.find(s=>s.k===st.sit), ids=ORDER.filter(id=>st.sel.has(id)), pn=profileName();
-  const tailored=st.mode==="tailored"&&pn;
+  const sit=SITS.find(s=>s.k===st.sit), ids=ORDER.filter(id=>st.sel.has(id)), prof=PROFILES.find(p=>p.k===st.profile);
+  const i=SITS.findIndex(s=>s.k===st.sit), prev=SITS[(i-1+SITS.length)%SITS.length], next=SITS[(i+1)%SITS.length];
   return `<section class="screen">
-    <div class="res-h"><span class="small muted">שלב 3 מתוך 3 · ההשוואה</span>
-      <h1>${sit.ic} ${esc(sit.t)}</h1>
-      <p class="muted">${tailored?`חתך מותאם ל־${esc(pn)} בתוך הנושא שבחרת.`:"כל הסעיפים שנבדקו בנושא, ללא התאמה לפרופיל."}</p></div>
-
-    ${pn?`<div class="matrixbar" role="group" aria-label="אופן הצגת ההשוואה">
-      <span class="mxlabel">איך להציג את התוצאות?</span>
-      <button type="button" class="matrixbtn" data-mode="tailored" aria-pressed="${st.mode==="tailored"}">מותאם אליי</button>
-      <button type="button" class="matrixbtn" data-mode="full" aria-pressed="${st.mode==="full"}">כל הנושא</button>
-    </div>`:""}
-
-    ${tailored?`<div class="tailored"><b>${esc(pn)} × ${esc(SHORT[sit.k])}</b><br>
-      המפלגות מושוות רק לפי ${sliceIndexes(sit).length} הסעיפים הרלוונטיים לחתך הזה. אפשר לעבור ל״כל הנושא״ בכל רגע.</div>`:""}
-
+    <div class="res-h"><span class="small muted">שלב 3 מתוך 3 · ההשוואה</span><h1><span aria-hidden="true">${sit.ic}</span> ${esc(sit.t)}</h1>
+      <p class="muted">מה כל רשימה כתבה שתעשה. לחצו על רשימה כדי לראות פרטים וקישור לקטע במצע.</p></div>
+    <div class="crumbs" aria-label="הבחירות שלך"><span>מי אני: <b>${prof?esc(prof.t):"לא נבחר"}</b></span><button type="button" data-go-btn="1">שינוי</button>
+      <span>נושא: <b>${SHORT[sit.k]}</b></span><button type="button" data-go-btn="2">שינוי</button></div>
     <div class="topics" role="group" aria-label="החלפת נושא">${SITS.map(s=>`<button type="button" class="topic" data-sit="${s.k}" aria-pressed="${s.k===st.sit}">${s.ic} ${SHORT[s.k]}</button>`).join("")}</div>
     <div class="toolrow"><button type="button" class="secondary" data-filter aria-expanded="${st.filter}">סינון רשימות (${ids.length} מתוך ${ORDER.length})</button></div>
     ${st.filter?`<div class="filter"><span class="small muted">לחצו כדי להוסיף או להסיר רשימה:</span><div class="fchips">${ORDER.map(id=>`<button type="button" class="fchip" data-sel="${id}" aria-pressed="${st.sel.has(id)}"><span class="lt" aria-hidden="true">${esc(P[id].letters)}</span>${esc(P[id].name)}</button>`).join("")}</div></div>`:""}
     <div class="cards">${ids.length?ids.map(id=>card(id,sit)).join(""):'<p class="pending">בחרו לפחות רשימה אחת בסינון.</p>'}</div>
-    <p class="pending"><b>8 רשימות רלוונטיות בהכנה:</b> ${PENDING.map(([n,l])=>`${esc(n)} (${esc(l)})`).join(" · ")}. לרשימות האלה אין מצע כתוב לבחירות 2026, והן ייבדקו לפי מסמכים רשמיים אחרים.</p>
-    <p class="small muted">הסדר של הרשימות אקראי ומשתנה בכל כניסה. החתך משנה אילו סעיפים נספרים ומוצגים, לא את נוסח המצע.</p>
+    <div class="pager"><button type="button" class="secondary" data-sit-nav="${prev.k}">→ הנושא הקודם: ${SHORT[prev.k]}</button><button type="button" class="secondary" data-sit-nav="${next.k}">הנושא הבא: ${SHORT[next.k]} ←</button></div>
+    <p class="pending"><b>${PENDING.length} רשימות בהכנה:</b> ${PENDING.map(([n,l])=>`${esc(n)} (${esc(l)})`).join(" · ")}. לרשימות האלה אין מצע כתוב לבחירות 2026, והן ייבדקו לפי מסמכים רשמיים אחרים.</p>
+    <p class="small muted">הסדר של הרשימות אקראי ומשתנה בכל כניסה.</p>
   </section>`;
 }
+function focusNote(k,items){
+  const prof=PROFILES.find(p=>p.k===st.profile); if(!prof) return "";
+  const f=focusIdx(k); if(f.length===items.length) return "";
+  const n=f.filter(i=>items[i][0]===OK).length;
+  return `<span class="small muted">בשאלות הרלוונטיות לפרופיל שלך: ${n} מתוך ${f.length} עם תוכנית קונקרטית</span>`;
+}
 function card(id,sit){
-  const p=P[id],[line,items]=p.s[sit.k],idxs=sliceIndexes(sit),viewItems=idxs.map(i=>items[i]);
-  const s=overall(viewItems),open=st.open===id;
-  const a=(A[id]||{})[sit.k];
-  let anc="";
-  if(a){const v=a.slice(1),rel=v.filter(x=>x!=="na"),n=rel.filter(x=>x===1).length;
-    anc=`<div class="block"><h3>ההתחייבות המרכזית, כלשונה</h3><blockquote>״${esc(a[0])}״</blockquote>
-      <h3 style="margin-top:.4rem">עוגנים במציאות: ${n} מתוך ${rel.length}</h3>
-      <div class="anchors">${v.map((x,i)=>`<span class="anc ${x===1?"y":x==="na"?"na":"n"}"><b aria-hidden="true">${x===1?"✓":x==="na"?"·":"✗"}</b>${ANAMES[i]}${x===1?"":x==="na"?": לא נדרש":": חסר"}</span>`).join("")}</div></div>`}
-  const pn=profileName(),tailored=st.mode==="tailored"&&pn;
+  const p=P[id],[line,items]=p.s[sit.k],s=overall(items),open=st.open.has(id);
   return `<article class="card">
     <button type="button" class="card-btn" data-open="${id}" aria-expanded="${open}" aria-controls="cb-${id}">
       <span class="ballot" aria-hidden="true">${esc(p.letters)}</span>
       <span class="card-main"><span class="card-name">${esc(p.name)} <span class="sr-only">, אותיות ${esc(p.letters)}</span></span>
         <span class="pill ${s}"><span aria-hidden="true">${ICON[s]}</span>${WORD[s]}</span>
-        <span class="card-line">${esc(line)}</span>
-        ${tailored?`<span class="small muted">בחתך: ${esc(pn)} · ${idxs.length} מתוך ${items.length} סעיפים</span>`:""}
-      </span>
+        <span class="card-line">${esc(line)}</span>${focusNote(sit.k,items)}</span>
       <span class="chev" aria-hidden="true">⌄</span>
     </button>
     <div class="card-body" id="cb-${id}" ${open?"":"hidden"}>
-      <div class="cover">${ball(score(viewItems),30)}<span>${coverText(viewItems)}</span></div>
-      ${anc}
-      <div class="block"><h3>${tailored?"מה רלוונטי לפרופיל שלך":"מה נבדק"}</h3>
-        <ul class="items">${idxs.map(i=>{const it=items[i];return `<li><span class="st ${it[0]}" aria-hidden="true">${ICON[it[0]]}</span><span><span class="lbl">${esc(sit.c[i])}:</span> ${it[0]===NO?'<span class="muted">לא נמצא במקור</span>':esc(it[1])}<span class="sr-only"> (${WORD[it[0]]})</span></span></li>`}).join("")}</ul>
-      </div>
-      ${tailored?`<div class="block"><h3>ומה הושמט מהחתך?</h3><p class="small muted">${items.map((_,i)=>i).filter(i=>!idxs.includes(i)).map(i=>esc(sit.c[i])).join(" · ")||"לא הושמטו סעיפים בנושא זה."}</p></div>`:""}
-      <p class="src">מקור: <a href="${p.src.u}" target="_blank" rel="noopener">${esc(p.src.t)}</a> (${esc(p.src.d)})</p>
-      <button type="button" class="secondary" data-sheet="${id}" style="align-self:flex-start">כל הנושאים של ${esc(p.name)}</button>
+      <div class="cover">${ball(score(items),30)}<span>${coverText(items)}</span></div>
+      ${anchorBlock(id,sit.k)}
+      ${checked(sit,items)}
+      ${readBox(id,sit.k)}
+      <button type="button" class="secondary" data-sheet="${id}" data-sheet-k="${sit.k}" style="align-self:flex-start">לשוטט בכל הנושאים של ${esc(p.name)}</button>
     </div>
   </article>`;
 }
@@ -552,45 +552,53 @@ function card(id,sit){
 function render(){
   stepper();
   main.innerHTML=st.step===1?screen1():st.step===2?screen2():screen3();
-  main.querySelectorAll("[data-prof]").forEach(b=>b.addEventListener("click",()=>{st.profile=b.dataset.prof||null;st.mode=st.profile?"tailored":"full";go(2)}));
-  main.querySelectorAll("[data-browse]").forEach(b=>b.addEventListener("click",()=>openSheet(ORDER[0],b,true)));
-  main.querySelectorAll(".choice[data-sit]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sit;st.open=null;go(3)}));
-  main.querySelectorAll(".topic[data-sit]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sit;st.open=null;render();main.querySelector(`.topic[data-sit="${st.sit}"]`).focus()}));
+  main.querySelectorAll("[data-prof]").forEach(b=>b.addEventListener("click",()=>{st.profile=b.dataset.prof||null;go(2)}));
+  main.querySelectorAll("[data-browse]").forEach(b=>b.addEventListener("click",()=>openSheet(ORDER[0],b)));
+  main.querySelectorAll(".choice[data-sit]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sit;go(3)}));
+  main.querySelectorAll(".topic[data-sit]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sit;render();main.querySelector(`.topic[data-sit="${st.sit}"]`).focus()}));
+  main.querySelectorAll("[data-sit-nav]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sitNav;go(3)}));
   main.querySelectorAll("[data-go-btn]").forEach(b=>b.addEventListener("click",()=>go(+b.dataset.goBtn)));
   main.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{st.filter=!st.filter;render();main.querySelector("[data-filter]").focus()}));
   main.querySelectorAll("[data-sel]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.sel;st.sel.has(id)?st.sel.delete(id):st.sel.add(id);render();main.querySelector(`[data-sel="${id}"]`).focus()}));
-  main.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.open;st.open=st.open===id?null:id;render();main.querySelector(`[data-open="${id}"]`).focus()}));
-  main.querySelectorAll("[data-sheet]").forEach(b=>b.addEventListener("click",()=>openSheet(b.dataset.sheet,b)));
-  main.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{st.mode=b.dataset.mode;st.open=null;render();main.querySelector(`[data-mode="${st.mode}"]`)?.focus()}));
+  main.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.open,on=!st.open.has(id);
+    on?st.open.add(id):st.open.delete(id);b.setAttribute("aria-expanded",on);document.getElementById("cb-"+id).hidden=!on}));
+  main.querySelectorAll("[data-sheet]").forEach(b=>b.addEventListener("click",()=>openSheet(b.dataset.sheet,b,b.dataset.sheetK)));
 }
 document.querySelectorAll(".stepper button").forEach(b=>b.addEventListener("click",()=>{const n=+b.dataset.go;
   if(n===3&&!st.sit){const pr=PROFILES.find(p=>p.k===st.profile);st.sit=pr?pr.s[0]:"cart";}
   go(n)}));
 
-/* list sheet */
+/* list sheet: read one list across all topics */
 let lastFocus=null;
-function openSheet(id,from,picker){
-  lastFocus=from;const p=P[id],el=document.getElementById("sheet");
+const app=document.querySelector(".app");
+function openSheet(id,from,openK){
+  if(from)lastFocus=from;const p=P[id],el=document.getElementById("sheet");
   el.innerHTML=`
     <div class="sheet-h"><span class="big" aria-hidden="true">${esc(p.letters)}</span>
       <div><h2 id="sheet-title">${esc(p.name)}</h2><span class="small muted">בראש הרשימה: ${esc(p.head)}</span></div>
       <button class="x" type="button" id="sheet-close" aria-label="סגירה">✕</button></div>
-    <div class="fchips" role="group" aria-label="בחירת רשימה">${ORDER.map(k=>`<button type="button" class="fchip" data-pick="${k}" aria-pressed="${k===id}"><span class="lt" aria-hidden="true">${esc(P[k].letters)}</span>${esc(P[k].name)}</button>`).join("")}</div>
-    <p class="src">מקור: <a href="${p.src.u}" target="_blank" rel="noopener">${esc(p.src.t)}</a> · ${esc(p.src.d)}</p>
+    <div class="fchips" role="group" aria-label="מעבר לרשימה אחרת">${ORDER.map(k=>`<button type="button" class="fchip" data-pick="${k}" aria-pressed="${k===id}"><span class="lt" aria-hidden="true">${esc(P[k].letters)}</span>${esc(P[k].name)}</button>`).join("")}</div>
+    <p class="src">המקור הראשי: <a href="${p.src.u}" target="_blank" rel="noopener">${esc(p.src.t)}</a> · ${esc(p.src.d)}</p>
     <div class="block"><h3>מה הרשימה עצמה שמה ראשון</h3><ol style="margin:0;padding-inline-start:1.3rem">${p.prio.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>
-    <div class="block"><h3>כל הנושאים. לחצו על נושא כדי להשוות עם שאר הרשימות</h3>
-    <div>${SITS.map(s=>{const [line,items]=p.s[s.k],o=overall(items);
-      return `<button type="button" class="srow" data-jump="${s.k}"><span class="st ${o}" aria-hidden="true">${ICON[o]}</span><span><b>${s.ic} ${SHORT[s.k]} <span class="sr-only">: ${WORD[o]}</span></b>${esc(line)}</span></button>`}).join("")}
-      ${EXTRA.map(([k,l])=>{const [o,t]=p.x[k];return `<div class="srow" style="cursor:default"><span class="st ${o}" aria-hidden="true">${ICON[o]}</span><span><b>${esc(l)}</b>${o===NO?'<span class="muted">לא נמצאה התייחסות</span>':esc(t)}</span></div>`}).join("")}
-    </div></div>`;
-  el.hidden=false;document.getElementById("scrim").hidden=false;document.body.style.overflow="hidden";
-  document.getElementById("sheet-close").addEventListener("click",closeSheet);
-  el.querySelectorAll("[data-pick]").forEach(b=>b.addEventListener("click",()=>{openSheet(b.dataset.pick,lastFocus);document.querySelector(`[data-pick="${b.dataset.pick}"]`).focus()}));
-  el.querySelectorAll("[data-jump]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.jump;st.open=id;closeSheet(true);go(3)}));
-  if(!picker||true)document.getElementById("sheet-close").focus();
+    <div class="block"><h3>כל הנושאים. לחצו על נושא כדי לקרוא</h3>
+    <div>${SITS.map(s=>{const [line,items]=p.s[s.k],o=overall(items),on=s.k===openK;
+      return `<div class="acc"><button type="button" data-acc="${s.k}" aria-expanded="${on}" aria-controls="acc-${s.k}"><span class="st ${o}" aria-hidden="true">${ICON[o]}</span><span><b><span aria-hidden="true">${s.ic}</span> ${SHORT[s.k]}<span class="sr-only">: ${WORD[o]}</span></b>${esc(line)}</span><span class="chev" aria-hidden="true">⌄</span></button>
+        <div class="acc-body" id="acc-${s.k}" ${on?"":"hidden"}>${anchorBlock(id,s.k)}${checked(s,items)}${readBox(id,s.k)}
+          <button type="button" class="secondary" data-jump="${s.k}" style="align-self:flex-start">להשוות ${SHORT[s.k]} מול שאר הרשימות</button></div></div>`}).join("")}
+      ${EXTRA.map(([k,l])=>{const [o,t]=p.x[k];return `<div class="srow"><span class="st ${o}" aria-hidden="true">${ICON[o]}</span><span><b>${esc(l)}</b>${o===NO?'<span class="muted">לא נמצאה התייחסות</span>':esc(t)}</span></div>`}).join("")}
+    </div></div>
+    <p class="small muted">ביטחון לאומי ומדיניות חוץ לא נבדקים בכלי הזה.</p>`;
+  el.hidden=false;document.getElementById("scrim").hidden=false;document.body.style.overflow="hidden";app.inert=true;
+  document.getElementById("sheet-close").addEventListener("click",()=>closeSheet());
+  el.querySelectorAll("[data-pick]").forEach(b=>b.addEventListener("click",()=>{openSheet(b.dataset.pick,null,openK);el.querySelector(`[data-pick="${b.dataset.pick}"]`).focus()}));
+  el.querySelectorAll("[data-acc]").forEach(b=>b.addEventListener("click",()=>{const on=b.getAttribute("aria-expanded")!=="true";
+    b.setAttribute("aria-expanded",on);document.getElementById("acc-"+b.dataset.acc).hidden=!on;if(on)openK=b.dataset.acc}));
+  el.querySelectorAll("[data-jump]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.jump;st.open.add(id);st.sel.add(id);closeSheet(true);go(3)}));
+  if(openK){const t=el.querySelector(`[data-acc="${openK}"]`);t.focus();t.scrollIntoView({block:"center"})}
+  else document.getElementById("sheet-close").focus();
 }
-function closeSheet(silent){document.getElementById("sheet").hidden=true;document.getElementById("scrim").hidden=true;document.body.style.overflow="";if(silent!==true)lastFocus?.focus()}
-document.getElementById("scrim").addEventListener("click",closeSheet);
+function closeSheet(silent){document.getElementById("sheet").hidden=true;document.getElementById("scrim").hidden=true;document.body.style.overflow="";app.inert=false;if(silent!==true)lastFocus?.focus()}
+document.getElementById("scrim").addEventListener("click",()=>closeSheet());
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("sheet").hidden)closeSheet()});
 
 /* text size */
@@ -600,7 +608,9 @@ function setScale(v){document.documentElement.style.setProperty("--scale",v);
 document.querySelectorAll("[data-scale]").forEach(b=>b.addEventListener("click",()=>setScale(b.dataset.scale)));
 try{const s=localStorage.getItem("scale");if(s)setScale(s)}catch(e){}
 document.getElementById("ball-legend").innerHTML=[0,.5,1].map(f=>ball(f,20)).join("");
+document.getElementById("out-scope").textContent=OUT_OF_SCOPE.join(", ")+" ו־23 רשימות נוספות";
 render();
 </script>
+
 </body>
 </html>
