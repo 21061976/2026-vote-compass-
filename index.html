@@ -64,7 +64,7 @@ p{margin:0} h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
 
 /* top bar */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);margin-inline:-16px;padding:.8rem 16px .6rem;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:.6rem}
-.top-row{display:flex;justify-content:space-between;align-items:center;gap:.6rem}
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}
 .brand{font-family:var(--f-display);font-weight:900;font-size:1.35rem}
 .size{display:flex;gap:.3rem}
 .size button{border:1px solid var(--line);background:var(--surface);border-radius:999px;min-width:44px;min-height:44px;cursor:pointer;font-weight:700}
@@ -139,6 +139,20 @@ blockquote{margin:0;font-family:var(--f-display);font-size:1.08rem;line-height:1
 .read a:hover{text-decoration:underline}
 .crumbs{display:flex;flex-wrap:wrap;gap:.3rem .9rem;align-items:center;font-size:.92rem;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.4rem .8rem}
 .crumbs button{background:none;border:0;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:44px;padding:0 .2rem}
+.pill.np{background:var(--none-soft);color:var(--none);border:1px dashed var(--none)}
+.ctx{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+.ctx li{border-inline-start:3px solid var(--line);padding-inline-start:.7rem}
+.ctx .from{display:block;font-size:.82rem;color:var(--muted)}
+.notice{border:1px dashed var(--none);border-radius:12px;padding:.6rem .8rem;font-size:.9rem;color:var(--muted)}
+.dir{display:grid;grid-template-columns:repeat(auto-fill,minmax(19rem,1fr));gap:.7rem}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.6rem;min-width:0}
+.dhead{display:flex;gap:.8rem;align-items:center}
+.dhead h2{font-size:1.1rem;font-family:var(--f-body);font-weight:700}
+.people{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.1rem .6rem;font-size:.93rem}
+.people dt{color:var(--muted)} .people dd{margin:0;font-weight:500}
+.three{margin:0;padding-inline-start:1.2rem;display:flex;flex-direction:column;gap:.25rem;font-size:.95rem}
+.navbtn{border:1.5px solid var(--accent);color:var(--accent);background:var(--surface);border-radius:999px;min-height:44px;padding:0 .9rem;cursor:pointer;font-weight:700;white-space:nowrap}
+.navbtn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
 .pager{display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
 .acc{border-bottom:1px solid var(--line)}
 .acc>button{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:start;padding:.75rem .2rem;border:0;background:none;text-align:start;cursor:pointer}
@@ -177,6 +191,7 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
   <header class="top">
     <div class="top-row">
       <span class="brand">מצפן אזרחי 2026</span>
+      <button type="button" class="navbtn" id="nav-dir" aria-pressed="false">כל הרשימות</button>
       <div class="size" role="group" aria-label="גודל טקסט">
         <button data-scale="1" aria-pressed="true" aria-label="טקסט רגיל">א</button>
         <button data-scale="1.15" aria-pressed="false" aria-label="טקסט גדול">א+</button>
@@ -207,7 +222,8 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
     <summary>איך בנינו את זה: כללי ההגינות</summary>
     <div class="in"><ol>
       <li>כל רשימה נבדקת לפי אותן שאלות בדיוק.</li>
-      <li>רק מסמכים שהרשימה פרסמה בעצמה. בלי ראיונות ובלי הערכות שלנו.</li>
+      <li>הדירוג (✓ / ◯ / —) ניתן רק לפי מצע או תוכנית שהרשימה פרסמה לבחירות 2026. בלי ראיונות ובלי הערכות שלנו.</li>
+      <li>רשימה שלא פרסמה מצע ל־2026 לא מדורגת. מוצג אצלה מה שכתוב במסמכים רשמיים קודמים, כמו הסכם קואליציוני, עם התאריך והמקור. הסכם קואליציוני הוא פשרה מלפני כמה שנים ולא הבטחה לבחירות האלה.</li>
       <li>סדר הרשימות אקראי ומשתנה בכל כניסה.</li>
       <li>הבחירה "מי אני" רק משנה את סדר ההצגה: נושאים מומלצים, ובתוך כל נושא השאלות הרלוונטיות לך קודם. הציון של כל רשימה מחושב תמיד על כל השאלות, ולכן הוא לא משתנה לפי הפרופיל.</li>
       <li>ביטחון לאומי ומדיניות חוץ לא נבדקים כאן. ביטחון אישי כן נבדק.</li>
@@ -217,8 +233,9 @@ footer{font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;ga
 
   <footer>
     <p>הכלי לא ממליץ על אף רשימה. עודכן: 1.10.2026 · גרסת עבודה.</p>
-    <p>בגרסה זו נכללות 13 רשימות שעברו את אחוז החסימה בסקר אחד לפחות מבין הסקרים האחרונים. 5 מוכנות ו־8 בהכנה.</p>
-    <p>לא נכללו בגרסה זו: <span id="out-scope"></span>. רשימת כל 38 הרשימות: <a href="https://www.idi.org.il/policy/parties-and-elections/elections/2026-1/" target="_blank" rel="noopener">המכון הישראלי לדמוקרטיה</a>.</p>
+    <p>בכלי נכללות 13 רשימות שעברו את אחוז החסימה בסקר אחד לפחות מבין הסקרים האחרונים. 5 מהן מדורגות לפי מצע או תוכנית ל־2026. ב־8 האחרות לא נמצא מצע ל־2026 שאפשר היה לקרוא, והן מוצגות לפי מסמכים קודמים ובלי דירוג.</p>
+    <p>בית המשפט העליון אישר לרע״ם ולרשימה המשותפת להתמודד.</p>
+    <p>לא נכללו: <span id="out-scope"></span>. רשימת כל 38 הרשימות: <a href="https://www.idi.org.il/policy/parties-and-elections/elections/2026-1/" target="_blank" rel="noopener">המכון הישראלי לדמוקרטיה</a>.</p>
   </footer>
 </div>
 <div class="scrim" id="scrim" hidden></div>
@@ -342,7 +359,7 @@ bw:{name:"כחול לבן",letters:"כן",head:"בני גנץ",src:{t:"מצע 20
 };
 const PENDING=[["הליכוד","מחל"],["ש״ס","שס"],["יהדות התורה","ג"],["הציונות הדתית–זהות","ט"],["עוצמה יהודית","ב"],["עמך ישראל","ך"],["רע״ם","עם"],["הרשימה המשותפת","ודם"]];
 /* Lists shown in this version. Data for other coded lists stays in P so they can be restored by adding their key here. */
-const IN_SCOPE=["yb","bey","ysh","dem","mil"];
+const IN_SCOPE=["yb","bey","ysh","dem","mil","likud","shas","utj","rz","otzma","amcha","raam","joint"];
 const OUT_OF_SCOPE=["כחול לבן","נעם"];
 
 
@@ -404,6 +421,87 @@ const A={
   age:["נעלה את קצבת הזקנה... נצמיד אותה לשינויים בשכר הממוצע",0,0,0,1]}
 };
 const ANAMES=["יעד מדיד","לוח זמנים","עלות או מקור מימון","מנגנון ביצוע"];
+
+/* Second place on each coded list (source: official candidate lists, via the Israel Democracy Institute). */
+const SECOND={yb:"רפאל בן שטרית",bey:"יאיר לפיד",ysh:"יורם כהן",dem:"נעמה לזימי",mil:"ירון זליכה",bw:"—"};
+Object.keys(SECOND).forEach(k=>{if(P[k])P[k].second=SECOND[k]});
+
+/* Lists with no written 2026 platform that we could read. They are NOT graded.
+   prio = three central items from the most recent official material found; ctx = what that material says per topic.
+   Every item carries the index of its source in srcs. */
+const NP={
+likud:{name:"הליכוד",letters:"מחל",head:"בנימין נתניהו",second:"אליהו (אלי) כהן",
+ status:"לא מפרסמת מצע לפני בחירות מאז 2009, לפי המכון הישראלי לדמוקרטיה",
+ srcs:[{t:"קווי היסוד של הממשלה ה־37, בראשות הליכוד",d:"דצמבר 2022, לפי דיווח ב״כיכר השבת״",u:"https://www.kikar.co.il/political-news/434371"},
+       {t:"עמוד הליכוד במכון הישראלי לדמוקרטיה",d:"",u:"https://www.idi.org.il/policy/parties-and-elections/parties/likud/"}],
+ prio:[["הוזלת מחירי הדיור והגדלת היצע הדירות כיעד לאומי",0],["החינוך במרכז סדר העדיפויות, וחינוך חינם מגיל לידה עד 3",0],["חקיקת פסקת התגברות",0]],
+ ctx:{home:[["״הממשלה תראה בהוזלת מחירי הדיור והגדלת היצע הדירות, יעד לאומי״",0]],
+  cart:[["״הקפאת מחירי החשמל, המים והארנונה״",0]],
+  kids:[["חינוך חינם מגיל לידה עד 3; ״הממשלה תעמיד את החינוך במרכז סדר העדיפויות הלאומי״",0]],
+  serve:[["״שכר החיילים יעלה ב-20%״",0]],
+  faith:[["״יישמר הסטטוס קוו בנושאי דת ומדינה כפי שהיה מקובל זה עשרות שנים בישראל״",0]]},
+ gov:["חקיקת פסקת התגברות; מינוי יועצים משפטיים כמשרת אמון",0]},
+shas:{name:"ש״ס",letters:"שס",head:"אריה דרעי",second:"ינון אזולאי",
+ status:"לא נמצא מצע כתוב לבחירות 2026",
+ srcs:[{t:"ההסכם הקואליציוני בין הליכוד לש״ס",d:"דצמבר 2022, לפי סיכום ב־ynet",u:"https://www.ynet.co.il/news/article/rym6ffyks"},
+       {t:"נוסח ההסכם (קובץ סרוק)",d:"2022",u:"https://www.idi.org.il/media/18947/שס.pdf"}],
+ prio:[["כרטיסי מזון לנזקקים, בהיקף של מיליארד ₪ בשנה לפחות",0],["הקפאת מחירי החשמל, המים והארנונה בשנת 2023",0],["הקמת רשות לאומית למאבק בעוני",0]],
+ ctx:{cart:[["כרטיסי מזון נטענים לנזקקים, בהיקף של מיליארד ₪ בשנה לפחות",0],["הקפאת מחירי החשמל, המים והארנונה בשנת 2023; בחינת הקפאה של מחירי הדלק ומוצרים בפיקוח",0],["הקמת רשות לאומית למאבק בעוני",0]],
+  faith:[["הקמת קרן שמיטה לחקלאים שומרי שמיטה",0]]}},
+utj:{name:"יהדות התורה",letters:"ג",head:"יעקב אשר",second:"יצחק גולדקנופף",
+ status:"לא נמצא מצע כתוב לבחירות 2026",
+ srcs:[{t:"ההסכם הקואליציוני בין הליכוד ליהדות התורה",d:"דצמבר 2022, לפי סיכום ב־ynet",u:"https://www.ynet.co.il/news/article/rym6ffyks"},
+       {t:"תשובת דגל התורה לשאלות ynet על דיור",d:"2026",u:"https://www.ynet.co.il/economy/article/skmk4paofe"},
+       {t:"נוסח ההסכם (קובץ סרוק)",d:"2022",u:"https://www.idi.org.il/media/18946/יהדות-התורה.pdf"}],
+ prio:[["חקיקת חוק יסוד: לימוד תורה",0],["הכרה בתעודות של לימוד תורני כשוות לתואר ראשון בשירות המדינה",0],["הוזלת הקרקע והגדלת הסיוע לרוכשי דירה ראשונה",1]],
+ ctx:{serve:[["השלמת החקיקה של חוק יסוד: לימוד תורה עד אישור תקציב 2023",0]],
+  work:[["הכרה בתעודות של לימוד תורני כשוות לתואר ראשון לצורך העסקה בשירות המדינה",0]],
+  home:[["הוזלת מחירי הקרקע דרך מדיניות רשות מקרקעי ישראל, האצת שיווק קרקעות וקיצור הליכי תכנון",1],["הגדלת הסיוע לרוכשי דירה ראשונה, וקידום שכירות ארוכת טווח במחיר הוגן",1]]}},
+rz:{name:"הציונות הדתית–זהות",letters:"ט",head:"בצלאל סמוטריץ'",second:"משה פייגלין",
+ status:"באתר המפלגה פורסם מצע, אבל האתר חסום לכלי שלנו ולא הצלחנו לקרוא אותו. הרשימה תיבדק ותדורג אחרי שהמצע ייקרא",
+ srcs:[{t:"תוכנית שהציגו סמוטריץ' ורוטמן במסיבת עיתונאים",d:"15.9.2026, לפי דיווח ב״הארץ״",u:"https://www.haaretz.co.il/news/elections/2026-09-15/ty-article/000001a0-a51b-dea8-afe0-e5bfad570000"},
+       {t:"ההסכם הקואליציוני בין הליכוד לציונות הדתית",d:"דצמבר 2022, לפי סיכום ב־ynet",u:"https://www.ynet.co.il/news/article/rym6ffyks"},
+       {t:"אתר המפלגה (המצע שלא נקרא)",d:"2026",u:"https://zionutdatit.org.il/"}],
+ prio:[["הגבלת עתירות לבית המשפט העליון וצמצום זכות העמידה",0],["פירוק הוועדה לבחירת שופטים ומינוי 8 עד 10 שופטים חדשים לעליון",0],["עד מחצית מעובדי המשרדים ימונו על ידי השרים, כולל יועצים משפטיים",0]],
+ ctx:{cart:[["הקפאת מחירי החשמל, המים והארנונה; בחינת הקפאה של מחירי הדלק",1]],
+  kids:[["חינוך חינם מגיל לידה עד 3",1],["החזרת מקצועות הרוח, התנ״ך וההיסטוריה לתוכנית הלימודים ולבגרות",1]],
+  move:[["קידום רכבת מהירה מקריית שמונה עד אילת",1]],
+  serve:[["העלאת שכר חיילי הסדיר ב־20%, ושכר מינימום בחצי השנה האחרונה לשירות",1],["הגדלת המלגות למשוחררים והעדפה מתקנת בקבלה ללימודי רפואה, משפטים, מחשבים, חשבונאות והנדסה",1]]},
+ gov:["הגבלת עתירות לעליון, ביטול עבירת הפרת האמונים, פירוק הוועדה לבחירת שופטים, והורדת אחוז החסימה",0]},
+otzma:{name:"עוצמה יהודית",letters:"ב",head:"איתמר בן גביר",second:"טלי גוטליב",
+ status:"לא נמצא מצע כתוב לבחירות 2026. אתר המפלגה לא נפתח לכלי שלנו",
+ srcs:[{t:"דרישות שהציגה המפלגה במסיבת עיתונאים",d:"22.9.2026, לפי דיווח ב־ynet",u:"https://www.ynet.co.il/news/elections2026/article/bj7vpgx5gx"},
+       {t:"ההסכם הקואליציוני בין הליכוד לעוצמה יהודית",d:"דצמבר 2022, לפי דיווח ב״כלכליסט״",u:"https://www.calcalist.co.il/local_news/article/sjftb10ij"},
+       {t:"נוסח ההסכם (קובץ סרוק)",d:"2022",u:"https://www.idi.org.il/media/18949/עוצמה-יהודית.pdf"}],
+ prio:[["דרישה לתיק הביטחון לבן גביר ולתיק המשפטים לגוטליב",0],["עידוד הגירה מרצון מעזה ומיהודה ושומרון",0],["מינוי שופטי העליון אחרי שימוע בוועדה בכנסת וברוב של שני שלישים",0]],
+ ctx:{safe:[["הקמת משמר לאומי",1],["תוספת לתקציב המשטרה, בהיקף שלא נקבע בהסכם",1]],
+  serve:[["העלאת שכר החיילים וקרקע בחינם ללוחמים משוחררים",0]],
+  home:[["2 מיליארד ₪ בשנה למשרד הנגב והגליל",1]]},
+ gov:["פיטורי פרקליט המדינה, הגבלת סמכות בג״ץ, והחמרת ענישה",0]},
+amcha:{name:"עמך ישראל",letters:"ך",head:"עופר וינטר",second:"יוסף חדאד",
+ status:"מפלגה חדשה. לא נמצאו מצע, אתר או מסמך עקרונות",
+ srcs:[{t:"הצהרות בהשקת המפלגה",d:"25.8.2026, לפי דיווח ב־ynet",u:"https://www.ynet.co.il/news/elections2026/article/s13ku7jdzg"},
+       {t:"סיכום ההצהרות באתר ״פולימטר״",d:"2026",u:"https://polimeter.co.il/research/ofer-winter-amcha-israel"}],
+ prio:[["״נעשה הכול להקים ממשלת ימין רחבה ככל הניתן״",0],["״הפיתרון בעזה הוא אחד - הגירה״",0],["גיוס חרדים, ״עם העסקנים או בלעדיהם״",1]],
+ ctx:{serve:[["גיוס חרדים, עם הסכמת ההנהגה החרדית או בלעדיה",1]]}},
+raam:{name:"רע״ם",letters:"עם",head:"מנסור עבאס",second:"יואב סגלוביץ",
+ status:"לא נמצא מצע כתוב לבחירות 2026. המצע האחרון שמופיע במכון הישראלי לדמוקרטיה הוא משנת 1999",
+ srcs:[{t:"ההסכם הקואליציוני של רע״ם עם ממשלת בנט–לפיד",d:"יוני 2021",u:"https://z.calcalist.co.il/assets/pickerul/fc8b8382-eb52-4b9d-8fff-7f1d9da8cc37.pdf"},
+       {t:"פרטי ההסכם, לפי ״ישראל היום״",d:"2021",u:"https://www.israelhayom.co.il/news/politics/article/1756952"}],
+ prio:[["תוכנית חומש לחברה הערבית, בהיקף של כ־30 מיליארד ₪",1],["2.5 מיליארד ₪ לחמש שנים למאבק בפשיעה בחברה הערבית",0],["הכרה ביישובים בנגב ותיקון חוק קמיניץ",0]],
+ ctx:{safe:[["2.5 מיליארד ₪ לחמש שנים למאבק בפשיעה ובאלימות בחברה הערבית",0]],
+  home:[["בחינת תיקון חוק קמיניץ בתוך 120 יום, והקפאת הריסות של בתים שאוכלסו לפני 2021",0],["הכרה בשלושה יישובים בנגב בתוך 45 יום, ותוכנית הסדרה לנגב בתוך תשעה חודשים",0]],
+  move:[["מיליארד ₪ בשנה לתשתיות תחבורה ביישובים הערביים בשנים 2022–2023",0]],
+  work:[["יעדים מעודכנים לייצוג הולם של ערבים בשירות המדינה ובחברות הממשלתיות",0]],
+  health:[["בריאות ורווחה נכללות בתוכנית החומש לחברה הערבית",0]],
+  kids:[["חינוך נכלל בתוכנית החומש לחברה הערבית",0]]}},
+joint:{name:"הרשימה המשותפת",letters:"ודם",head:"יוסף ג'בארין",second:"אחמד טיבי",
+ status:"לא פורסם מצע משותף. אחמד טיבי: ״זו משותפת טכנית עם הסכמה על מצע מינימום״. חד״ש, תע״ל ובל״ד שומרות כל אחת על עמדותיה",
+ srcs:[{t:"דיווח על הסכם האיחוד",d:"2026, ynet",u:"https://www.ynet.co.il/news/article/sy3p103kfe"}],
+ prio:[],ctx:{},
+ note:"סמי אבו שחאדה, שהוצב במקום השלישי, נפסל בבית המשפט העליון ופרש מההתמודדות."}
+};
+Object.assign(P,Object.fromEntries(Object.entries(NP).map(([k,v])=>[k,{...v,np:true}])));
 
 /* Where each list writes about each topic. Missing = the list's main source. Deep links add a text fragment so supporting browsers scroll to the quoted passage. */
 const TOPIC_SRC={
@@ -481,9 +579,53 @@ function go(step){st.step=step;render();window.scrollTo({top:0,behavior:reduce()
   const h=main.querySelector("h1");if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true})}}
 
 function stepper(){
+  const dir=st.step==="dir";
+  document.getElementById("nav-dir").setAttribute("aria-pressed",dir);
   document.querySelectorAll(".stepper button").forEach(b=>{const n=+b.dataset.go;
-    b.removeAttribute("aria-current");b.classList.toggle("done",n<st.step);
+    b.removeAttribute("aria-current");b.classList.toggle("done",!dir&&n<st.step);
     if(n===st.step)b.setAttribute("aria-current","step");});
+}
+const srcLine=(p,i)=>{const x=p.srcs[i];return `<a href="${x.u}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.d?` (${esc(x.d)})`:""}`};
+const badge=p=>p.np?`<span class="pill np">אין מצע ל־2026 שנבדק</span>`:`<span class="pill ok">מצע או תוכנית ל־2026</span>`;
+function screenDir(){
+  return `<section class="screen">
+    <div class="q-h"><h1>כל הרשימות</h1>
+      <p>${ORDER.length} הרשימות שנכללות בכלי: מי בראש, מי במקום השני, ושלושה דברים מרכזיים. הסדר אקראי.</p></div>
+    <div class="dir">${ORDER.map(id=>{const p=P[id];
+      const three=p.np?p.prio.map(([t,i])=>`<li>${esc(t)}</li>`).join(""):p.prio.map(t=>`<li>${esc(t)}</li>`).join("");
+      const from=p.np?(p.prio.length?`<p class="small muted">מתוך: ${[...new Set(p.prio.map(x=>x[1]))].map(i=>srcLine(p,i)).join(" · ")}</p>`:""):`<p class="small muted">שלושת הפרקים הראשונים ב<a href="${p.src.u}" target="_blank" rel="noopener">${esc(p.src.t)}</a> (${esc(p.src.d)})</p>`;
+      return `<article class="dcard">
+        <div class="dhead"><span class="ballot" aria-hidden="true">${esc(p.letters)}</span><div><h2>${esc(p.name)}<span class="sr-only">, אותיות ${esc(p.letters)}</span></h2>${badge(p)}</div></div>
+        <dl class="people"><dt>בראש הרשימה</dt><dd>${esc(p.head)}</dd><dt>מקום שני</dt><dd>${esc(p.second||"—")}</dd></dl>
+        ${p.np?`<p class="notice">${esc(p.status)}</p>`:""}
+        ${three?`<div class="block"><h3>שלושה דברים מרכזיים</h3><ol class="three">${three}</ol>${from}</div>`:""}
+        ${p.note?`<p class="small muted">${esc(p.note)}</p>`:""}
+        <button type="button" class="secondary" data-sheet="${id}" style="align-self:flex-start">כל הנושאים של ${esc(p.name)}</button>
+      </article>`}).join("")}</div>
+    <p class="small muted">המקומות ברשימות לפי רשימות המועמדים הרשמיות, כפי שפורסמו ב<a href="https://www.idi.org.il/policy/parties-and-elections/elections/2026-1/" target="_blank" rel="noopener">מכון הישראלי לדמוקרטיה</a>.</p>
+    <button type="button" class="ghost" data-go-btn="1">→ חזרה להשוואה לפי נושא</button>
+  </section>`;
+}
+function ctxList(p,k){
+  const c=(p.ctx||{})[k]||[];
+  return c.length?`<ul class="ctx">${c.map(([t,i])=>`<li>${esc(t)}<span class="from">מתוך: ${srcLine(p,i)}</span></li>`).join("")}</ul>`:`<p class="muted">לא נמצאה התייחסות לנושא במסמכים שבדקנו.</p>`;
+}
+function npCard(id,sit){
+  const p=P[id],c=(p.ctx||{})[sit.k]||[],open=st.open.has(id);
+  return `<article class="card">
+    <button type="button" class="card-btn" data-open="${id}" aria-expanded="${open}" aria-controls="cb-${id}">
+      <span class="ballot" aria-hidden="true">${esc(p.letters)}</span>
+      <span class="card-main"><span class="card-name">${esc(p.name)} <span class="sr-only">, אותיות ${esc(p.letters)}</span></span>
+        <span class="pill np">אין מצע ל־2026 שנבדק · לא מדורגת</span>
+        <span class="card-line">${c.length?`במסמך קודם: ${esc(c[0][0])}`:"לא נמצאה התייחסות לנושא במסמכים שבדקנו"}</span></span>
+      <span class="chev" aria-hidden="true">⌄</span>
+    </button>
+    <div class="card-body" id="cb-${id}" ${open?"":"hidden"}>
+      <p class="notice">${esc(p.status)}. לכן הרשימה לא מדורגת, ומוצג רק מה שכתוב במסמכים קודמים. אלה אינן התחייבויות לבחירות 2026.</p>
+      <div class="block"><h3>מה נמצא במסמכים קודמים על ${SHORT[sit.k]}</h3>${ctxList(p,sit.k)}</div>
+      <button type="button" class="secondary" data-sheet="${id}" data-sheet-k="${sit.k}" style="align-self:flex-start">לשוטט בכל הנושאים של ${esc(p.name)}</button>
+    </div>
+  </article>`;
 }
 
 function screen1(){
@@ -492,7 +634,7 @@ function screen1(){
       <p>נמליץ על נושאים, ובתוך כל נושא נציג קודם את השאלות שהכי רלוונטיות לך. אפשר לדלג.</p></div>
     <div class="choices">${PROFILES.map(p=>`<button type="button" class="choice" data-prof="${p.k}" aria-pressed="${st.profile===p.k}"><span class="ic" aria-hidden="true">${p.ic}</span>${esc(p.t)}</button>`).join("")}</div>
     <button type="button" class="secondary" data-prof="" style="align-self:flex-start">דלג: הראו לי את כל הנושאים</button>
-    <button type="button" class="ghost" data-browse>או: לראות את כל העמדות של רשימה אחת ←</button>
+    <button type="button" class="ghost" data-browse>או: לראות את כל הרשימות, מי בראש ומה מרכזי אצלן ←</button>
   </section>`;
 }
 function screen2(){
@@ -519,7 +661,7 @@ function screen3(){
     ${st.filter?`<div class="filter"><span class="small muted">לחצו כדי להוסיף או להסיר רשימה:</span><div class="fchips">${ORDER.map(id=>`<button type="button" class="fchip" data-sel="${id}" aria-pressed="${st.sel.has(id)}"><span class="lt" aria-hidden="true">${esc(P[id].letters)}</span>${esc(P[id].name)}</button>`).join("")}</div></div>`:""}
     <div class="cards">${ids.length?ids.map(id=>card(id,sit)).join(""):'<p class="pending">בחרו לפחות רשימה אחת בסינון.</p>'}</div>
     <div class="pager"><button type="button" class="secondary" data-sit-nav="${prev.k}">→ הנושא הקודם: ${SHORT[prev.k]}</button><button type="button" class="secondary" data-sit-nav="${next.k}">הנושא הבא: ${SHORT[next.k]} ←</button></div>
-    <p class="pending"><b>${PENDING.length} רשימות בהכנה:</b> ${PENDING.map(([n,l])=>`${esc(n)} (${esc(l)})`).join(" · ")}. לרשימות האלה אין מצע כתוב לבחירות 2026, והן ייבדקו לפי מסמכים רשמיים אחרים.</p>
+    <p class="pending">רשימות שמסומנות ״אין מצע ל־2026 שנבדק״ לא מדורגות. מוצג אצלן רק מה שכתוב במסמכים רשמיים קודמים, כמו הסכמים קואליציוניים.</p>
     <p class="small muted">הסדר של הרשימות אקראי ומשתנה בכל כניסה.</p>
   </section>`;
 }
@@ -530,6 +672,7 @@ function focusNote(k,items){
   return `<span class="small muted">בשאלות הרלוונטיות לפרופיל שלך: ${n} מתוך ${f.length} עם תוכנית קונקרטית</span>`;
 }
 function card(id,sit){
+  if(P[id].np) return npCard(id,sit);
   const p=P[id],[line,items]=p.s[sit.k],s=overall(items),open=st.open.has(id);
   return `<article class="card">
     <button type="button" class="card-btn" data-open="${id}" aria-expanded="${open}" aria-controls="cb-${id}">
@@ -551,9 +694,9 @@ function card(id,sit){
 
 function render(){
   stepper();
-  main.innerHTML=st.step===1?screen1():st.step===2?screen2():screen3();
+  main.innerHTML=st.step==="dir"?screenDir():st.step===1?screen1():st.step===2?screen2():screen3();
   main.querySelectorAll("[data-prof]").forEach(b=>b.addEventListener("click",()=>{st.profile=b.dataset.prof||null;go(2)}));
-  main.querySelectorAll("[data-browse]").forEach(b=>b.addEventListener("click",()=>openSheet(ORDER[0],b)));
+  main.querySelectorAll("[data-browse]").forEach(b=>b.addEventListener("click",()=>go("dir")));
   main.querySelectorAll(".choice[data-sit]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sit;go(3)}));
   main.querySelectorAll(".topic[data-sit]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sit;render();main.querySelector(`.topic[data-sit="${st.sit}"]`).focus()}));
   main.querySelectorAll("[data-sit-nav]").forEach(b=>b.addEventListener("click",()=>{st.sit=b.dataset.sitNav;go(3)}));
@@ -578,6 +721,19 @@ function openSheet(id,from,openK){
       <div><h2 id="sheet-title">${esc(p.name)}</h2><span class="small muted">בראש הרשימה: ${esc(p.head)}</span></div>
       <button class="x" type="button" id="sheet-close" aria-label="סגירה">✕</button></div>
     <div class="fchips" role="group" aria-label="מעבר לרשימה אחרת">${ORDER.map(k=>`<button type="button" class="fchip" data-pick="${k}" aria-pressed="${k===id}"><span class="lt" aria-hidden="true">${esc(P[k].letters)}</span>${esc(P[k].name)}</button>`).join("")}</div>
+    <p class="small"><b>מקום שני:</b> ${esc(p.second||"—")}</p>
+    ${p.np?`
+    <p class="notice">${esc(p.status)}. הרשימה לא מדורגת. מוצג רק מה שכתוב במסמכים קודמים, ואלה אינן התחייבויות לבחירות 2026.</p>
+    ${p.note?`<p class="small muted">${esc(p.note)}</p>`:""}
+    ${p.prio.length?`<div class="block"><h3>שלושה דברים מרכזיים</h3><ol style="margin:0;padding-inline-start:1.3rem">${p.prio.map(([t,i])=>`<li>${esc(t)} <span class="small muted">(${srcLine(p,i)})</span></li>`).join("")}</ol></div>`:""}
+    <div class="block"><h3>מה נמצא במסמכים קודמים, לפי נושא</h3>
+    <div>${SITS.map(s=>{const c=(p.ctx||{})[s.k]||[],on=s.k===openK;
+      return `<div class="acc"><button type="button" data-acc="${s.k}" aria-expanded="${on}" aria-controls="acc-${s.k}"><span class="st none" aria-hidden="true">${c.length?c.length:"—"}</span><span><b><span aria-hidden="true">${s.ic}</span> ${SHORT[s.k]}</b>${c.length?esc(c[0][0]):'<span class="muted">לא נמצאה התייחסות</span>'}</span><span class="chev" aria-hidden="true">⌄</span></button>
+        <div class="acc-body" id="acc-${s.k}" ${on?"":"hidden"}>${ctxList(p,s.k)}
+          <button type="button" class="secondary" data-jump="${s.k}" style="align-self:flex-start">להשוות ${SHORT[s.k]} מול שאר הרשימות</button></div></div>`}).join("")}
+      ${p.gov?`<div class="srow"><span class="st none" aria-hidden="true">·</span><span><b>משפט, ממשל וזכויות</b>${esc(p.gov[0])} <span class="small muted">(${srcLine(p,p.gov[1])})</span></span></div>`:""}
+    </div></div>
+    <div class="block"><h3>המקורות</h3><ul style="margin:0;padding-inline-start:1.2rem">${p.srcs.map((x,i)=>`<li>${srcLine(p,i)}</li>`).join("")}</ul></div>`:`
     <p class="src">המקור הראשי: <a href="${p.src.u}" target="_blank" rel="noopener">${esc(p.src.t)}</a> · ${esc(p.src.d)}</p>
     <div class="block"><h3>מה הרשימה עצמה שמה ראשון</h3><ol style="margin:0;padding-inline-start:1.3rem">${p.prio.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>
     <div class="block"><h3>כל הנושאים. לחצו על נושא כדי לקרוא</h3>
@@ -586,7 +742,7 @@ function openSheet(id,from,openK){
         <div class="acc-body" id="acc-${s.k}" ${on?"":"hidden"}>${anchorBlock(id,s.k)}${checked(s,items)}${readBox(id,s.k)}
           <button type="button" class="secondary" data-jump="${s.k}" style="align-self:flex-start">להשוות ${SHORT[s.k]} מול שאר הרשימות</button></div></div>`}).join("")}
       ${EXTRA.map(([k,l])=>{const [o,t]=p.x[k];return `<div class="srow"><span class="st ${o}" aria-hidden="true">${ICON[o]}</span><span><b>${esc(l)}</b>${o===NO?'<span class="muted">לא נמצאה התייחסות</span>':esc(t)}</span></div>`}).join("")}
-    </div></div>
+    </div></div>`}
     <p class="small muted">ביטחון לאומי ומדיניות חוץ לא נבדקים בכלי הזה.</p>`;
   el.hidden=false;document.getElementById("scrim").hidden=false;document.body.style.overflow="hidden";app.inert=true;
   document.getElementById("sheet-close").addEventListener("click",()=>closeSheet());
@@ -607,6 +763,7 @@ function setScale(v){document.documentElement.style.setProperty("--scale",v);
   try{localStorage.setItem("scale",v)}catch(e){}}
 document.querySelectorAll("[data-scale]").forEach(b=>b.addEventListener("click",()=>setScale(b.dataset.scale)));
 try{const s=localStorage.getItem("scale");if(s)setScale(s)}catch(e){}
+document.getElementById("nav-dir").addEventListener("click",()=>go(st.step==="dir"?1:"dir"));
 document.getElementById("ball-legend").innerHTML=[0,.5,1].map(f=>ball(f,20)).join("");
 document.getElementById("out-scope").textContent=OUT_OF_SCOPE.join(", ")+" ו־23 רשימות נוספות";
 render();
